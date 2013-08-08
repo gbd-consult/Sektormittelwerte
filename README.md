@@ -1,0 +1,4 @@
+sectormean
+==========
+
+Sektorgemittelte Rasterwerte berechnen 
