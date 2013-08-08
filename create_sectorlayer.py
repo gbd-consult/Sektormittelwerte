@@ -4,7 +4,8 @@
 #
 # MODULE:       
 # AUTHOR:       Otto Dassau <dassau@gbd-consult.de>
-# PURPOSE:	Create sector layer as shape file
+# PURPOSE:	Create sector layer as shape file. Based on an idea by 
+#		chriserik		
 #
 # COPYRIGHT:    (c) 2013 Otto Dassau - Geoinformatik Buero Dassau
 #               This program is free software under the GNU General Public
