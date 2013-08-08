@@ -19,7 +19,7 @@
 
 from shapely.geometry import Point, Polygon
 import math
-import geojson
+from osgeo import ogr
 
 # initial parameters for segmentation
 steps = 90 # subdivision of circle. The higher, the smoother it will be
@@ -39,10 +39,6 @@ step_angle_width = (end-start) / steps
 sector_width = (end-start) / sectors
 steps_per_sector = int(math.ceil(steps / sectors))
 
-# helper function to calculate point from relative polar coordinates (degrees)
-def polar_point(origin_point, angle,  distance):
-    return [origin_point.x + math.sin(math.radians(angle)) * distance, origin_point.y + math.cos(math.radians(angle)) * distance]
-
 
 features = []
 for x in xrange(0,int(sectors)):
@@ -59,20 +55,26 @@ for x in xrange(0,int(sectors)):
     # then again the center point to finish the polygon
     segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
     segment_vertices.append(polar_point(center, 0,0))
+    print segment_vertices
+    
+    # create feature as geojson
+    #features.append(geojson.Feature(
+    #    geometry=Polygon(segment_vertices))
+    #)
+    
+    # create feature as shape
+    #features.append(ogr.Feature(geometry=Polygon(segment_vertices)))
+	#print features
 
-    # create feature
-    features.append(geojson.Feature(
-        geometry=Polygon(segment_vertices))
-    )
 
-# prepare geojson feature collection
-res = geojson.FeatureCollection(
-    features = features
-)
+## prepare geojson feature collection
+#res = geojson.FeatureCollection(
+    #features = features
+#)
 
-# write to file
-f = open('sector.json', 'w')
-f.write(geojson.dumps(res))
-f.close()
+## write to file
+#f = open('sector.json', 'w')
+#f.write(geojson.dumps(res))
+#f.close()
 
 
