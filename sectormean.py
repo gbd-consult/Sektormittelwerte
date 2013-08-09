@@ -59,15 +59,21 @@ class SectorMean:
         # connect the action to the run method
         self.action.triggered.connect(self.run)
 
-        # Add toolbar button and menu item
-        self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu(u"&sectormean", self.action)
+        # check if Raster menu available
+        if hasattr(self.iface, "addPluginToRasterMenu"):
+            # Raster menu and toolbar available
+            self.iface.addRasterToolBarIcon(self.action)
+            self.iface.addPluginToRasterMenu("&sectormean", self.action)
+        else:
+            # there is no Raster menu, place plugin under Plugins menu as usual
+            self.iface.addToolBarIcon(self.action)
+            self.iface.addPluginToMenu("&sectormean", self.action)
 
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu(u"&sectormean", self.action)
         self.iface.removeToolBarIcon(self.action)
-
+    
     # run method that performs all the real work
     def run(self):
         # show the dialog
