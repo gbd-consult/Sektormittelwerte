@@ -63,16 +63,21 @@ class SectorMean:
         if hasattr(self.iface, "addPluginToRasterMenu"):
             # Raster menu and toolbar available
             self.iface.addRasterToolBarIcon(self.action)
-            self.iface.addPluginToRasterMenu("&sectormean", self.action)
+            self.iface.addPluginToRasterMenu("&Argusoft", self.action)
         else:
             # there is no Raster menu, place plugin under Plugins menu as usual
             self.iface.addToolBarIcon(self.action)
-            self.iface.addPluginToMenu("&sectormean", self.action)
+            self.iface.addPluginToMenu("&Argusoft", self.action)
 
     def unload(self):
-        # Remove the plugin menu item and icon
-        self.iface.removePluginMenu(u"&sectormean", self.action)
-        self.iface.removeToolBarIcon(self.action)
+        # check if Raster menu available and remove our buttons from appropriate
+        # menu and toolbar
+        if hasattr(self.iface, "addPluginToRasterMenu"):
+            self.iface.removePluginRasterMenu("&Argusoft",self.action)
+            self.iface.removeRasterToolBarIcon(self.action)
+        else:
+            self.iface.removePluginMenu("&Argusoft",self.action)
+            self.iface.removeToolBarIcon(self.action) 
     
     # run method that performs all the real work
     def run(self):
