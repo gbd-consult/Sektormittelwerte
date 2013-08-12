@@ -31,7 +31,6 @@ import os.path
 
 
 class SectorMean:
-
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
