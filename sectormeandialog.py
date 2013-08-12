@@ -140,3 +140,22 @@ class SectorMeanDialog(QtGui.QDialog):
             mean_value = feature.attributes()[2]
             return mean_value
 
+    def vectorAttr(self):
+        inshape = self.ui.InPoint.currentText()
+        vLayer = self.getVectorLayerByName(inshape)
+        provider = vLayer.dataProvider()
+        feature = QgsFeature()
+        allAttrs = provider.attributeIndexes()
+        while provider.nextFeature(feat):
+            attrs = feat.attributeMap()
+            for feature in vpoly.getFeatures():
+                mean_value = feature.attributes()[2]
+                return mean_value
+            
+    def saveCSV(self):
+    
+        # mittlere Rauhigkeit (Mittelwerte auf Basis des angegebenen Radius)
+        z0 = self.meanBuffer()
+
+
+
