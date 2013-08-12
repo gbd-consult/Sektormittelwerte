@@ -113,5 +113,30 @@ class SectorMeanDialog(QtGui.QDialog):
                 if layer.isValid():
                     return layer
                 else:
-                    return None 
+                    return None
+                    
+    # Rasterwert an Position
+    def sampleRaster20(self, layer, x, y):
+        ident = layer.dataProvider().identify(QgsPoint(x,y), QgsRaster.IdentifyFormatValue ).results()
+        return ident[1]
+            
+    # Frage Wert für die Rasterlayer an Position [stx],[sty] ab
+    def sampleRaster(self, raster_name, x, y):
+        layer = self.getRasterLayerByName(raster_name)
+        return self.sampleRaster20(layer, x, y)
+            
+    def meanBuffer(self):
+        # leeren Memorylayer erzeugen mit Puffer [distm] um die Position [stx],[sty]
+        vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+        feature = QgsFeature()
+        feature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.bufferz0.value(),5))
+        provider = vpoly.dataProvider()
+        provider.addFeatures( [feature] )
+        vpoly.commitChanges()
+        stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRastZ.currentText() ).source())
+        stats.calculateStatistics(None)
+        allAttrs = provider.attributeIndexes()       
+        for feature in vpoly.getFeatures():
+            mean_value = feature.attributes()[2]
+            return mean_value
 
