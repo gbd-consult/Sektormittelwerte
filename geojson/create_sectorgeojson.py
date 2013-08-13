@@ -11,10 +11,10 @@ import geojson
 # initial parameters for segmentation
 steps = 90 # subdivision of circle. The higher, the smoother it will be
 sectors = 12.0 # number of sectors in the circle (12 means 30 degrees per sector)
-radius = 360.0 # circle radius
+radius = 3000.0 # circle radius
 start = 345.0 # start of circle in degrees
 end = 344.99999 # end of circle in degrees
-center = Point(23,42)
+center = Point(508475,5403024)
 
 # prepare parameters
 if start > end:
@@ -46,6 +46,7 @@ for x in xrange(0,int(sectors)):
     # then again the center point to finish the polygon
     segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
     segment_vertices.append(polar_point(center, 0,0))
+    print segment_vertices
 
     # create feature
     features.append(geojson.Feature(

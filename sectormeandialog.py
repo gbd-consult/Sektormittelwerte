@@ -38,6 +38,11 @@ from qgis.gui import *
 # für die Berechung des Mittelwertes
 from qgis.analysis import QgsZonalStatistics
 
+# für den Sektorkreis
+from shapely.geometry import Point, Polygon
+import math
+import csv
+
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self):
         QDialog.__init__(self)
@@ -124,38 +129,90 @@ class SectorMeanDialog(QtGui.QDialog):
     def sampleRaster(self, raster_name, x, y):
         layer = self.getRasterLayerByName(raster_name)
         return self.sampleRaster20(layer, x, y)
-            
-    def meanBuffer(self):
-        # leeren Memorylayer erzeugen mit Puffer [distm] um die Position [stx],[sty]
-        vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-        feature = QgsFeature()
-        feature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.bufferz0.value(),5))
-        provider = vpoly.dataProvider()
-        provider.addFeatures( [feature] )
-        vpoly.commitChanges()
-        stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRastZ.currentText() ).source())
-        stats.calculateStatistics(None)
-        allAttrs = provider.attributeIndexes()       
-        for feature in vpoly.getFeatures():
-            mean_value = feature.attributes()[2]
-            return mean_value
 
-    def vectorAttr(self):
-        inshape = self.ui.InPoint.currentText()
-        vLayer = self.getVectorLayerByName(inshape)
-        provider = vLayer.dataProvider()
+    # Erstelle einen Kreis aus 12 Sektoren
+    def sectorCircle(self):  
+        # Initialisiere Parameters für die Sektoren
+        steps = 90 # subdivision of circle. The higher, the smoother it will be
+        sectors = 12.0 # number of sectors in the circle (12 means 30 degrees per sector)
+        radius = distm # circle radius
+        start = 345.0 # start of circle in degrees
+        # FIXME: nicht exakt geschlossen
+        end = 344.99999999 # end of circle in degrees
+        center = Point(xCoord, yCoord)
+        
+        # prepare parameters
+        if start > end:
+            start = start - 360
+        else:
+            pass
+        step_angle_width = (end-start) / steps
+        sector_width = (end-start) / sectors
+        steps_per_sector = int(math.ceil(steps / sectors))
+        
+        # helper function to calculate point from relative polar coordinates (degrees)
+        def polar_point(origin_point, angle,  distance):
+            return [origin_point.x + math.sin(math.radians(angle)) * distance, origin_point.y + math.cos(math.radians(angle)) * distance]
+        
+        features = []
+        for x in xrange(0,int(sectors)):
+            segment_vertices = []
+        
+        # first the center and first point
+        segment_vertices.append(polar_point(center, xCoord, yCoord))
+        segment_vertices.append(polar_point(center, start + x*sector_width,radius))
+        
+        # then the sector outline points
+        for z in xrange(1, steps_per_sector):
+            segment_vertices.append((polar_point(center, start + x * sector_width + z * step_angle_width,radius)))
+        
+        # then again the center point to finish the polygon
+        segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
+        segment_vertices.append(polar_point(center, xCoord, yCoord))
+        sectorcircle = segment_vertices
+        return sectorcircle
+        
+    def sectorMean(self):
+        # CSV Layer auslesen
+        inCSV = self.ui.InPoint.currentText()
+        pLayer = self.getVectorLayerByName(inCSV)
+        pProvider = pLayer.dataProvider()
         feature = QgsFeature()
-        allAttrs = provider.attributeIndexes()
-        while provider.nextFeature(feat):
-            attrs = feat.attributeMap()
+        AllAttrs = pProvider.attributeIndexes()
+        # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
+        # und in einen memory Layer schreiben
+        for feature in pLayer.getFeatures():
+            self.station = feature.attributes()[0]
+            self.xCoord = feature.attributes()[1]
+            self.yCoord = feature.attributes()[2]
+            self.distm = feature.attributes()[3]         
+
+            # Erzeugen des Mittelwertes ueber den Gesamtkreis
+            # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
+            vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+            pfeature = QgsFeature()
+            pfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.distm,5))
+            pprovider = vpoly.dataProvider()
+            pprovider.addFeatures( [feature] )
+            vpoly.commitChanges()
+            stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
+            stats.calculateStatistics(None)
+            vallAttrs = pprovider.attributeIndexes()       
+            for vfeat in vpoly.getFeatures():
+                pmean_value = vfeat.attributes()[2]
+            
+            # Erzeugen des Mittelwertes für die einzelnen Sektoren
+            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
+            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+            sfeature = QgsFeature()
+            sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
+            provider = vpoly.dataProvider()
+            provider.addFeatures( [feature] )
+            vpoly.commitChanges()
+            stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
+            stats.calculateStatistics(None)
+            vallAttrs = provider.attributeIndexes()       
             for feature in vpoly.getFeatures():
                 mean_value = feature.attributes()[2]
-                return mean_value
-            
-    def saveCSV(self):
-    
-        # mittlere Rauhigkeit (Mittelwerte auf Basis des angegebenen Radius)
-        z0 = self.meanBuffer()
-
 
 
