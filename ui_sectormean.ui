@@ -129,7 +129,7 @@
     </size>
    </property>
    <property name="toolTip">
-    <string>(Shift+S) to Save Graph</string>
+    <string/>
    </property>
    <property name="text">
     <string>Analyse speichern</string>
