@@ -291,7 +291,11 @@ class SectorMeanDialog(QtGui.QDialog):
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
         # Test: Ausgabe als CSV
+        header = ['station', 'sektor', 'mean']
         with open(self.fileName, 'wb') as csvfile:
-            datawriter = csv.writer(csvfile)
+            datawriter = csv.writer(csvfile)		
+            # schreibe Kopfzeile
+            datawriter.writerow(header)
+            # schreibe Daten
             for int1, int2, fp1 in zip(pstation, psektnr,  pmean):
                 datawriter.writerow((int1, int2, fp1))
