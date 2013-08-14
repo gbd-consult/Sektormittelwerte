@@ -160,7 +160,7 @@ class SectorMeanDialog(QtGui.QDialog):
         if idx != -1:
             combobox.setCurrentIndex( idx ) 
 
-    def getVectorLayerByName( myName ):
+    def getVectorLayerByName( self,  myName ):
         layermap = QgsMapLayerRegistry.instance().mapLayers()
         for name, layer in layermap.iteritems():
             if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point and layer.name() == myName:
@@ -239,8 +239,7 @@ class SectorMeanDialog(QtGui.QDialog):
         
     def saveCSV(self):
         # CSV Layer auslesen
-        inCSV = self.ui.InPoint.currentText()
-        csvLayer = self.getVectorLayerByName(inCSV)
+        csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
         csvProvider = csvLayer.dataProvider()
         csvFeature = QgsFeature()
         csvAllAttrs = csvProvider.attributeIndexes()
@@ -263,30 +262,30 @@ class SectorMeanDialog(QtGui.QDialog):
             pProvider = vpoly.dataProvider()
             pProvider.addFeatures( [pFeature] )
             vpoly.commitChanges()
-            pStats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
+            pStats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
             pStats.calculateStatistics(None)
             vAllAttrs = pProvider.attributeIndexes()       
             for vfeat in vpoly.getFeatures():
                 pmean_value = vfeat.attributes()[2]
-                pmean.append(mean_value)
-                pstation.append(station)
+                pmean.append(pmean_value)
+                pstation.append(self.station)
                 psektnr.append(kreisnr)
 
-            # Erzeugen von Mittelerten fuer 12 Sektoren
-            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
-            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-            sFeature = QgsFeature()
-            #sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
-            sProvider = spoly.dataProvider()
-            sProvider.addFeatures( [sFeature] )
-            spoly.commitChanges()
-            sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
-            sStats.calculateStatistics(None)
-            sAllAttrs = sProvider.attributeIndexes()       
-            for sfeat in spoly.getFeatures():
-                smean_value = sfeat.attributes()[2]
-                smean.append(smean_value)
-                stat.append(station)
+#            # Erzeugen von Mittelerten fuer 12 Sektoren
+#            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
+#            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+#            sFeature = QgsFeature()
+#            #sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
+#            sProvider = spoly.dataProvider()
+#            sProvider.addFeatures( [sFeature] )
+#            spoly.commitChanges()
+#            sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
+#            sStats.calculateStatistics(None)
+#            sAllAttrs = sProvider.attributeIndexes()       
+#            for sfeat in spoly.getFeatures():
+#                smean_value = sfeat.attributes()[2]
+#                smean.append(smean_value)
+#                stat.append(station)
                 
         # Test: Ausgabe als CSV
         with open('/home/dassau/output.csv', 'wb') as csvfile:
