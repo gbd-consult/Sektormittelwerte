@@ -175,13 +175,15 @@ class SectorMeanDialog(QtGui.QDialog):
     def sectorMean(self):
         # CSV Layer auslesen
         inCSV = self.ui.InPoint.currentText()
-        pLayer = self.getVectorLayerByName(inCSV)
-        pProvider = pLayer.dataProvider()
-        feature = QgsFeature()
-        AllAttrs = pProvider.attributeIndexes()
+        csvLayer = self.getVectorLayerByName(inCSV)
+        csvProvider = csvLayer.dataProvider()
+        csvFeature = QgsFeature()
+        csvAllAttrs = csvProvider.attributeIndexes()
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
-        for feature in pLayer.getFeatures():
+        mean = [] ; sektnr = [] ; stat = [] # ; rwert = [] ; hwert = [] ; distanz = []  
+        kreisnr = -1
+        for feature in csvLayer.getFeatures():
             self.station = feature.attributes()[0]
             self.xCoord = feature.attributes()[1]
             self.yCoord = feature.attributes()[2]
@@ -190,29 +192,40 @@ class SectorMeanDialog(QtGui.QDialog):
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
             # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
             vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-            pfeature = QgsFeature()
-            pfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.distm,5))
-            pprovider = vpoly.dataProvider()
-            pprovider.addFeatures( [feature] )
+            pFeature = QgsFeature()
+            pFeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.distm,5))
+            pProvider = vpoly.dataProvider()
+            pProvider.addFeatures( [pFeature] )
             vpoly.commitChanges()
             stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
             stats.calculateStatistics(None)
-            vallAttrs = pprovider.attributeIndexes()       
+            vAllAttrs = pProvider.attributeIndexes()       
             for vfeat in vpoly.getFeatures():
-                pmean_value = vfeat.attributes()[2]
-            
-            # Erzeugen des Mittelwertes für die einzelnen Sektoren
-            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
-            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-            sfeature = QgsFeature()
-            sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
-            provider = vpoly.dataProvider()
-            provider.addFeatures( [feature] )
-            vpoly.commitChanges()
-            stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
-            stats.calculateStatistics(None)
-            vallAttrs = provider.attributeIndexes()       
-            for feature in vpoly.getFeatures():
-                mean_value = feature.attributes()[2]
+                mean_value = vfeat.attributes()[2]
+                mean.append(mean_value)
+                stat.append(station)
+                sektnr.append(kreisnr)
+#                rwert.append()
+#                hwert.append()
+#                distanz.append()
+         
+        # Test: Ausgabe als CSV
+        with open('/home/dassau/output.csv', 'wb') as csvfile:
+            datawriter = csv.writer(csvfile)
+            for int1, int2,  fp1 in zip(stat, sektnr,  mean):
+                datawriter.writerow((int1, int2, fp1))
+
+#            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
+#            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+#            sfeature = QgsFeature()
+#            sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
+#            provider = vpoly.dataProvider()
+#            provider.addFeatures( [feature] )
+#            vpoly.commitChanges()
+#            stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.InRast.currentText() ).source())
+#            stats.calculateStatistics(None)
+#            vallAttrs = provider.attributeIndexes()       
+#            for feature in vpoly.getFeatures():
+#                mean_value = feature.attributes()[2]
 
 

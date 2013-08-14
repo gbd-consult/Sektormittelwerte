@@ -4,12 +4,12 @@
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>441284.16201430739602074</xmin>
-            <ymin>5349741.09693825896829367</ymin>
-            <xmax>568677.28291700768750161</xmax>
-            <ymax>5453469.86101692821830511</ymax>
+            <xmin>477901.61249999981373549</xmin>
+            <ymin>5402298.20434782654047012</ymin>
+            <xmax>547997.9233695650473237</xmax>
+            <ymax>5424752.45434782654047012</ymax>
         </extent>
-        <projections>1</projections>
+        <projections>0</projections>
         <destinationsrs>
             <spatialrefsys>
                 <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
@@ -23,37 +23,37 @@
             </spatialrefsys>
         </destinationsrs>
     </mapcanvas>
-    <legend updateDrawingOrder="true" activeLayer="mm_201220130812142907737">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012" showFeatureCount="0">
+    <legend updateDrawingOrder="true" activeLayer="mm_2012_utm20130814110242994">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_utm" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="mm_201220130812142907737" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="mm_2012_utm20130814110242994" visible="1"/>
             </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0_test_gk3" showFeatureCount="0">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0_test" showFeatureCount="0">
             <filegroup open="false" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="corine2006_z0_test_gk320130812142444627" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="corine2006_z0_test20130814110328414" visible="1"/>
             </filegroup>
         </legendlayer>
     </legend>
     <projectlayers layercount="2">
         <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-            <id>corine2006_z0_test_gk320130812142444627</id>
-            <datasource>../../weibullanalyse2/testdaten/corine2006_z0_test_gk3.tif</datasource>
+            <id>corine2006_z0_test20130814110328414</id>
+            <datasource>./corine2006_z0_test.tif</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
                 <value></value>
             </keywordList>
-            <layername>corine2006_z0_test_gk3</layername>
+            <layername>corine2006_z0_test</layername>
             <srs>
                 <spatialrefsys>
-                    <proj4>+proj=tmerc +lat_0=0 +lon_0=9 +k=1 +x_0=3500000 +y_0=0 +ellps=bessel +towgs84=598.1,73.7,418.2,0.202,0.045,-2.455,6.7 +units=m +no_defs</proj4>
-                    <srsid>2647</srsid>
-                    <srid>31467</srid>
-                    <authid>EPSG:31467</authid>
-                    <description>DHDN / Gauss-Kruger zone 3</description>
-                    <projectionacronym>tmerc</projectionacronym>
-                    <ellipsoidacronym>bessel</ellipsoidacronym>
+                    <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
+                    <srsid>3116</srsid>
+                    <srid>32632</srid>
+                    <authid>EPSG:32632</authid>
+                    <description>WGS 84 / UTM zone 32N</description>
+                    <projectionacronym>utm</projectionacronym>
+                    <ellipsoidacronym>WGS84</ellipsoidacronym>
                     <geographicflag>false</geographicflag>
                 </spatialrefsys>
             </srs>
@@ -76,25 +76,25 @@
             </pipe>
             <blendMode>0</blendMode>
         </maplayer>
-        <maplayer minimumScale="0" maximumScale="1e+08" minLabelScale="0" maxLabelScale="1e+08" geometry="Point" type="vector" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
-            <id>mm_201220130812142907737</id>
-            <datasource>file:./mm_2012.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
+        <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" minLabelScale="0" maxLabelScale="1e+08" geometry="Point" type="vector" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
+            <id>mm_2012_utm20130814110242994</id>
+            <datasource>file:./mm_2012_utm.dat?type=csv&amp;xField=x&amp;yField=y&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
                 <value></value>
             </keywordList>
-            <layername>mm_2012</layername>
+            <layername>mm_2012_utm</layername>
             <srs>
                 <spatialrefsys>
-                    <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
-                    <srsid>3452</srsid>
-                    <srid>4326</srid>
-                    <authid>EPSG:4326</authid>
-                    <description>WGS 84</description>
-                    <projectionacronym>longlat</projectionacronym>
+                    <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
+                    <srsid>3116</srsid>
+                    <srid>32632</srid>
+                    <authid>EPSG:32632</authid>
+                    <description>WGS 84 / UTM zone 32N</description>
+                    <projectionacronym>utm</projectionacronym>
                     <ellipsoidacronym>WGS84</ellipsoidacronym>
-                    <geographicflag>true</geographicflag>
+                    <geographicflag>false</geographicflag>
                 </spatialrefsys>
             </srs>
             <provider encoding="System">delimitedtext</provider>
@@ -113,7 +113,7 @@
                             <prop k="outline_width" v="0"/>
                             <prop k="outline_width_unit" v="MM"/>
                             <prop k="scale_method" v="area"/>
-                            <prop k="size" v="3"/>
+                            <prop k="size" v="4"/>
                             <prop k="size_unit" v="MM"/>
                         </layer>
                     </symbol>
@@ -267,8 +267,8 @@
             <edittypes>
                 <edittype labelontop="0" editable="1" type="0" name="distm"/>
                 <edittype labelontop="0" editable="1" type="0" name="st"/>
-                <edittype labelontop="0" editable="1" type="0" name="stlat"/>
-                <edittype labelontop="0" editable="1" type="0" name="stlon"/>
+                <edittype labelontop="0" editable="1" type="0" name="x"/>
+                <edittype labelontop="0" editable="1" type="0" name="y"/>
             </edittypes>
             <editform></editform>
             <editforminit></editforminit>
@@ -330,7 +330,7 @@
             <ProjectCRSProj4String type="QString">+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs +towgs84=0,0,0</ProjectCRSProj4String>
             <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
             <ProjectCRSID type="int">3116</ProjectCRSID>
-            <ProjectionsEnabled type="int">1</ProjectionsEnabled>
+            <ProjectionsEnabled type="int">0</ProjectionsEnabled>
         </SpatialRefSys>
         <DefaultStyles>
             <Fill type="QString"></Fill>
