@@ -52,13 +52,16 @@ class SectorMeanDialog(QtGui.QDialog):
         
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
-               
+              
         # connect layer list in plugin combobox 
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWillBeRemoved(QString)"), self.remove_layer)
         
         # connect Interaktive Anzeige starten/stoppen
         QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
+        
+        # Immer im nicht aktivierten Modus starten
+        self.ui.cbxActive.setCheckState(Qt.Unchecked)
         
         # connect speichern als CSV
         QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
@@ -75,11 +78,11 @@ class SectorMeanDialog(QtGui.QDialog):
         if self.ui.cbxActive.isChecked():
             QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinates)
             QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
-            #QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)           
+            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)           
         else:
             QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinates)
             QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
-            #QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)
+            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)
 
     # Anzeige der Werte an und aussetellen
     def changePlot(self):
@@ -99,11 +102,10 @@ class SectorMeanDialog(QtGui.QDialog):
             self.ui.outputYEdit.setText("%d" % (y))
             self.yCoord = y
             
-#    # Gebe X-Koordinate an Mousepositon aus und überschreibe vorherige (append ergänzt)
-#    def listen_z0(self, point):
-#        if self.meanBuffer():
-#            mean = self.meanBuffer()
-#            self.ui.outputMean.setText("%d" % (mean))
+    # Gebe Mittelwert der Rauhigkeit an Mousepositon aus und überschreibe vorherige (append ergänzt)
+    def listen_z0(self, point):
+         mean = float(self.meanBuffer())
+         self.ui.outputMean.setText("%.2f" % (mean))
 
     def add_layer(self, layerid):
         self.initVectorLayerCombobox( self.ui.InPoint, self.ui.InPoint.currentText() )
