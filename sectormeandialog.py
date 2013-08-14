@@ -286,9 +286,12 @@ class SectorMeanDialog(QtGui.QDialog):
 #                smean_value = sfeat.attributes()[2]
 #                smean.append(smean_value)
 #                stat.append(station)
-                
+
+        self.standortname = self.ui.InPoint.currentText()
+        self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
+
         # Test: Ausgabe als CSV
-        with open('/home/dassau/output.csv', 'wb') as csvfile:
+        with open(self.fileName, 'wb') as csvfile:
             datawriter = csv.writer(csvfile)
             for int1, int2, fp1 in zip(pstation, psektnr,  pmean):
                 datawriter.writerow((int1, int2, fp1))
