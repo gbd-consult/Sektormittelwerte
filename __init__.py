@@ -23,7 +23,7 @@
 
 
 def name():
-    return "sectormean"
+    return "Sektormittelwerte"
 
 
 def description():

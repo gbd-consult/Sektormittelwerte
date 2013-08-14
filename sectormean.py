@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- SectorMean
+ Sektormittelwerte
                                  A QGIS plugin
  Ermittlung sektorgemittelter Rasterwerte
                               -------------------

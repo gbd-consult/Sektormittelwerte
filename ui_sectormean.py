@@ -152,7 +152,7 @@ class Ui_SectorMean(object):
         QtCore.QMetaObject.connectSlotsByName(SectorMean)
 
     def retranslateUi(self, SectorMean):
-        SectorMean.setWindowTitle(_translate("SectorMean", "SectorMean", None))
+        SectorMean.setWindowTitle(_translate("SectorMean", "Sektormittelwerte", None))
         self.label_1.setText(_translate("SectorMean", "Standortdatei", None))
         self.label_2.setText(_translate("SectorMean", "Rauhigkeit (z0)", None))
         self.buttonSaveAs.setText(_translate("SectorMean", "Analyse speichern", None))
