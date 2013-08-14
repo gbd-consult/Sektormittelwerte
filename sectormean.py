@@ -48,7 +48,7 @@ class SectorMean:
                 QCoreApplication.installTranslator(self.translator)
 
         # Create the dialog (after translation) and keep reference
-        self.dlg = SectorMeanDialog()
+        self.dlg = SectorMeanDialog(self.iface)
 
     def initGui(self):
         # Create action that will start plugin configuration

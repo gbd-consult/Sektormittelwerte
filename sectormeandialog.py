@@ -24,7 +24,7 @@
 # QMessageBox.information(None, "Info:", <variable>)
 
 import logging
-# Ändere den Level zurück auf logging.WARNING(default) vor dem Release
+# aendere den Level zurück auf logging.WARNING(default) vor dem Release
 logging.basicConfig(level=logging.WARNING)
 
 from PyQt4 import QtCore, QtGui
@@ -35,28 +35,75 @@ from ui_sectormean import Ui_SectorMean
 from qgis.core import *
 from qgis.gui import *
 
-# für die Berechung des Mittelwertes
+# fuer die Berechung des Mittelwertes
 from qgis.analysis import QgsZonalStatistics
 
-# für den Sektorkreis
+# fuer den Sektorkreis
 from shapely.geometry import Point, Polygon
 import math
 import csv
 
 class SectorMeanDialog(QtGui.QDialog):
-    def __init__(self):
+    def __init__(self,  iface):
         QDialog.__init__(self)
         # Set up the user interface from Designer.
         self.ui = Ui_SectorMean()
         self.ui.setupUi(self)
         
+        self.iface=iface
+        self.canvas=self.iface.mapCanvas()
+               
         # connect layer list in plugin combobox 
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWillBeRemoved(QString)"), self.remove_layer)
         
+        # connect Interaktive Anzeige starten/stoppen
+        QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
+        
+        # connect speichern als CSV
+        QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
+
         # Lade Rasterlayer in die Combobox
         self.initVectorLayerCombobox( self.ui.InPoint, 'key_of_default_layer' )
         self.initRasterLayerCombobox( self.ui.InRast, 'key_of_default_layer' )
+
+        # Setze Radius (z0) für die Berechnung der Mittelwertes des Gesamtkreises
+        self.buffer = self.ui.bufferz0.value()
+
+    # (from value tool)
+    def changeActive(self):
+        if self.ui.cbxActive.isChecked():
+            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinates)
+            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
+            #QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)           
+        else:
+            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinates)
+            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
+            #QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)
+
+    # Anzeige der Werte an und aussetellen
+    def changePlot(self):
+        self.changeActive(self.ui.cbxActive.checkState())
+        
+    # Gebe X-Koordinate an Mousepositon aus und überschreibe vorherige (append ergänzt)
+    def listen_xCoordinates(self, point):
+        if point.x():
+            x = point.x()
+            self.ui.outputXEdit.setText("%d" % (x))
+            self.xCoord = x
+    
+    # Gebe Y-Koordinate an Mouseposition aus und überschreibe Vorherige (append ergänzt)
+    def listen_yCoordinates(self, point):
+        if point.y():
+            y = point.y()
+            self.ui.outputYEdit.setText("%d" % (y))
+            self.yCoord = y
+            
+#    # Gebe X-Koordinate an Mousepositon aus und überschreibe vorherige (append ergänzt)
+#    def listen_z0(self, point):
+#        if self.meanBuffer():
+#            mean = self.meanBuffer()
+#            self.ui.outputMean.setText("%d" % (mean))
 
     def add_layer(self, layerid):
         self.initVectorLayerCombobox( self.ui.InPoint, self.ui.InPoint.currentText() )
@@ -130,6 +177,22 @@ class SectorMeanDialog(QtGui.QDialog):
         layer = self.getRasterLayerByName(raster_name)
         return self.sampleRaster20(layer, x, y)
 
+    # Berechne Mittelwert fuer Gesamtkreis an Mouseposition 
+    def meanBuffer(self):
+        # leeren Memorylayer erzeugen für den Puffer z0 um die Mousepoition
+        vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+        feature = QgsFeature()
+        feature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.ui.bufferz0.value(),5))
+        provider = vpoly.dataProvider()
+        provider.addFeatures( [feature] )
+        vpoly.commitChanges()
+        stats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
+        stats.calculateStatistics(None)
+        allAttrs = provider.attributeIndexes()       
+        for feature in vpoly.getFeatures():
+            mean_value = feature.attributes()[2]
+            return mean_value
+
     # Erstelle einen Kreis aus 12 Sektoren
     def sectorCircle(self):  
         # Initialisiere Parameters für die Sektoren
@@ -172,7 +235,7 @@ class SectorMeanDialog(QtGui.QDialog):
         sectorcircle = segment_vertices
         return sectorcircle
         
-    def sectorMean(self):
+    def saveCSV(self):
         # CSV Layer auslesen
         inCSV = self.ui.InPoint.currentText()
         csvLayer = self.getVectorLayerByName(inCSV)
