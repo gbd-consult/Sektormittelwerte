@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-4.2.dtd">
 <!-- eric4 tasks file for project sectormean -->
-<!-- Saved: 2013-08-14, 18:54:08 -->
+<!-- Saved: 2013-08-15, 11:26:05 -->
 <Tasks version="4.2">
   <Task priority="1" completed="False" bugfix="True">
     <Summary>FIXME: Das Löschen von Layern wird nicht richtig übernommen</Summary>
     <Description></Description>
-    <Created>2013-08-14, 18:52:01</Created>
+    <Created>2013-08-15, 11:08:00</Created>
     <Resource>
       <Filename>sectormeandialog.py</Filename>
       <Linenumber>114</Linenumber>
@@ -15,7 +15,7 @@
   <Task priority="1" completed="False" bugfix="True">
     <Summary>FIXME: nicht exakt geschlossen</Summary>
     <Description></Description>
-    <Created>2013-08-14, 18:52:01</Created>
+    <Created>2013-08-15, 11:08:00</Created>
     <Resource>
       <Filename>sectormeandialog.py</Filename>
       <Linenumber>205</Linenumber>
