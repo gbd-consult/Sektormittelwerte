@@ -4,12 +4,12 @@
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>494179.2077019281568937</xmin>
-            <ymin>5402490.29296093434095383</ymin>
-            <xmax>529227.36313671083189547</xmax>
-            <ymax>5430096.21455339342355728</ymax>
+            <xmin>589326.63590460177510977</xmin>
+            <ymin>5664207.65721214935183525</ymin>
+            <xmax>656926.04418604495003819</xmax>
+            <ymax>5717452.79783550277352333</ymax>
         </extent>
-        <projections>0</projections>
+        <projections>1</projections>
         <destinationsrs>
             <spatialrefsys>
                 <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
@@ -23,28 +23,28 @@
             </spatialrefsys>
         </destinationsrs>
     </mapcanvas>
-    <legend updateDrawingOrder="true" activeLayer="mm_2012_utm20130814110242994">
-        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_utm" showFeatureCount="0">
+    <legend updateDrawingOrder="true" activeLayer="corine2006_z0_utm20130816170716397">
+        <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_test100" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="mm_2012_utm20130814110242994" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="mm_2012_test10020130816142050353" visible="1"/>
             </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0_test" showFeatureCount="0">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0-utm" showFeatureCount="0">
             <filegroup open="false" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="corine2006_z0_test20130814110328414" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm20130816170716397" visible="1"/>
             </filegroup>
         </legendlayer>
     </legend>
     <projectlayers layercount="2">
-        <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-            <id>corine2006_z0_test20130814110328414</id>
-            <datasource>./corine2006_z0_test.tif</datasource>
+        <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+            <id>corine2006_z0_utm20130816170716397</id>
+            <datasource>./corine2006_z0-utm.grid</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
                 <value></value>
             </keywordList>
-            <layername>corine2006_z0_test</layername>
+            <layername>corine2006_z0-utm</layername>
             <srs>
                 <spatialrefsys>
                     <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
@@ -62,13 +62,56 @@
             </customproperties>
             <provider>gdal</provider>
             <pipe>
-                <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="0" type="singlebandgray" grayBand="1">
+                <rasterrenderer opacity="1" alphaBand="-1" classificationMax="1.49852" classificationMinMaxOrigin="CumulativeCutFullExtentEstimated" band="1" classificationMin="0.01995" type="singlebandpseudocolor">
                     <rasterTransparency/>
-                    <contrastEnhancement>
-                        <minValue>0.01</minValue>
-                        <maxValue>2</maxValue>
-                        <algorithm>StretchAndClipToMinimumMaximum</algorithm>
-                    </contrastEnhancement>
+                    <rastershader>
+                        <colorrampshader colorRampType="INTERPOLATED" clip="0">
+                            <item alpha="255" value="0.01995" label="0.019950" color="#d7191c"/>
+                            <item alpha="255" value="0.054335" label="0.054335" color="#da2622"/>
+                            <item alpha="255" value="0.088721" label="0.088721" color="#de3428"/>
+                            <item alpha="255" value="0.123106" label="0.123106" color="#e1422f"/>
+                            <item alpha="255" value="0.157491" label="0.157491" color="#e55035"/>
+                            <item alpha="255" value="0.191877" label="0.191877" color="#e85e3c"/>
+                            <item alpha="255" value="0.226262" label="0.226262" color="#ec6c42"/>
+                            <item alpha="255" value="0.260647" label="0.260647" color="#ef7a48"/>
+                            <item alpha="255" value="0.295033" label="0.295033" color="#f3874f"/>
+                            <item alpha="255" value="0.329418" label="0.329418" color="#f69555"/>
+                            <item alpha="255" value="0.363803" label="0.363803" color="#faa35c"/>
+                            <item alpha="255" value="0.398189" label="0.398189" color="#fdaf63"/>
+                            <item alpha="255" value="0.432574" label="0.432574" color="#fdb76b"/>
+                            <item alpha="255" value="0.46696" label="0.466960" color="#fdbe74"/>
+                            <item alpha="255" value="0.501345" label="0.501345" color="#fdc67d"/>
+                            <item alpha="255" value="0.53573" label="0.535730" color="#fdce86"/>
+                            <item alpha="255" value="0.570116" label="0.570116" color="#fdd58e"/>
+                            <item alpha="255" value="0.604501" label="0.604501" color="#fedd97"/>
+                            <item alpha="255" value="0.638886" label="0.638886" color="#fee4a0"/>
+                            <item alpha="255" value="0.673272" label="0.673272" color="#feeca9"/>
+                            <item alpha="255" value="0.707657" label="0.707657" color="#fef3b1"/>
+                            <item alpha="255" value="0.742042" label="0.742042" color="#fefbba"/>
+                            <item alpha="255" value="0.776428" label="0.776428" color="#fbfdbd"/>
+                            <item alpha="255" value="0.810813" label="0.810813" color="#f3fabb"/>
+                            <item alpha="255" value="0.845198" label="0.845198" color="#ebf7b8"/>
+                            <item alpha="255" value="0.879584" label="0.879584" color="#e3f3b6"/>
+                            <item alpha="255" value="0.913969" label="0.913969" color="#dbf0b3"/>
+                            <item alpha="255" value="0.948354" label="0.948354" color="#d4edb1"/>
+                            <item alpha="255" value="0.98274" label="0.982740" color="#cceaae"/>
+                            <item alpha="255" value="1.01713" label="1.017125" color="#c4e7ac"/>
+                            <item alpha="255" value="1.05151" label="1.051510" color="#bce4a9"/>
+                            <item alpha="255" value="1.0859" label="1.085896" color="#b4e0a7"/>
+                            <item alpha="255" value="1.12028" label="1.120281" color="#acdda4"/>
+                            <item alpha="255" value="1.15467" label="1.154667" color="#a2d6a5"/>
+                            <item alpha="255" value="1.18905" label="1.189052" color="#96cea7"/>
+                            <item alpha="255" value="1.22344" label="1.223437" color="#8ac5a9"/>
+                            <item alpha="255" value="1.25782" label="1.257823" color="#7ebdab"/>
+                            <item alpha="255" value="1.29221" label="1.292208" color="#72b5ad"/>
+                            <item alpha="255" value="1.32659" label="1.326593" color="#66acaf"/>
+                            <item alpha="255" value="1.36098" label="1.360979" color="#5aa4b1"/>
+                            <item alpha="255" value="1.39536" label="1.395364" color="#4e9cb3"/>
+                            <item alpha="255" value="1.42975" label="1.429749" color="#4293b5"/>
+                            <item alpha="255" value="1.46413" label="1.464135" color="#368bb7"/>
+                            <item alpha="255" value="1.49852" label="1.498520" color="#2b83ba"/>
+                        </colorrampshader>
+                    </rastershader>
                 </rasterrenderer>
                 <brightnesscontrast brightness="0" contrast="0"/>
                 <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
@@ -77,35 +120,35 @@
             <blendMode>0</blendMode>
         </maplayer>
         <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" minLabelScale="0" maxLabelScale="1e+08" geometry="Point" type="vector" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
-            <id>mm_2012_utm20130814110242994</id>
-            <datasource>file:./mm_2012_utm.dat?type=csv&amp;xField=x&amp;yField=y&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
+            <id>mm_2012_test10020130816142050353</id>
+            <datasource>file:./mm_2012_test100.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
                 <value></value>
             </keywordList>
-            <layername>mm_2012_utm</layername>
+            <layername>mm_2012_test100</layername>
             <srs>
                 <spatialrefsys>
-                    <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
-                    <srsid>3116</srsid>
-                    <srid>32632</srid>
-                    <authid>EPSG:32632</authid>
-                    <description>WGS 84 / UTM zone 32N</description>
-                    <projectionacronym>utm</projectionacronym>
+                    <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+                    <srsid>3452</srsid>
+                    <srid>4326</srid>
+                    <authid>EPSG:4326</authid>
+                    <description>WGS 84</description>
+                    <projectionacronym>longlat</projectionacronym>
                     <ellipsoidacronym>WGS84</ellipsoidacronym>
-                    <geographicflag>false</geographicflag>
+                    <geographicflag>true</geographicflag>
                 </spatialrefsys>
             </srs>
             <provider encoding="System">delimitedtext</provider>
-            <previewExpression></previewExpression>
+            <previewExpression>"st"||', '||"stlon"||', '||"stlat"||', '||"distm"</previewExpression>
             <vectorjoins/>
             <renderer-v2 symbollevels="0" type="singleSymbol">
                 <symbols>
                     <symbol alpha="1" type="marker" name="0">
                         <layer pass="0" class="SimpleMarker" locked="0">
                             <prop k="angle" v="0"/>
-                            <prop k="color" v="255,0,0,255"/>
+                            <prop k="color" v="35,84,159,255"/>
                             <prop k="color_border" v="0,0,0,255"/>
                             <prop k="name" v="circle"/>
                             <prop k="offset" v="0,0"/>
@@ -113,7 +156,7 @@
                             <prop k="outline_width" v="0"/>
                             <prop k="outline_width_unit" v="MM"/>
                             <prop k="scale_method" v="area"/>
-                            <prop k="size" v="4"/>
+                            <prop k="size" v="2"/>
                             <prop k="size_unit" v="MM"/>
                         </layer>
                     </symbol>
@@ -267,12 +310,12 @@
             <edittypes>
                 <edittype labelontop="0" editable="1" type="0" name="distm"/>
                 <edittype labelontop="0" editable="1" type="0" name="st"/>
-                <edittype labelontop="0" editable="1" type="0" name="x"/>
-                <edittype labelontop="0" editable="1" type="0" name="y"/>
+                <edittype labelontop="0" editable="1" type="0" name="stlat"/>
+                <edittype labelontop="0" editable="1" type="0" name="stlon"/>
             </edittypes>
-            <editform>.</editform>
+            <editform></editform>
             <editforminit></editforminit>
-            <annotationform>.</annotationform>
+            <annotationform></annotationform>
             <editorlayout>generatedlayout</editorlayout>
             <excludeAttributesWMS/>
             <excludeAttributesWFS/>
@@ -298,8 +341,8 @@
             <Automatic type="bool">true</Automatic>
             <DegreeFormat type="QString">D</DegreeFormat>
         </PositionPrecision>
-        <WMSContactPhone type="QString"></WMSContactPhone>
         <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+        <WMSContactPhone type="QString"></WMSContactPhone>
         <WMSServiceAbstract type="QString"></WMSServiceAbstract>
         <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
         <Measure>
@@ -330,7 +373,7 @@
             <ProjectCRSProj4String type="QString">+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs +towgs84=0,0,0</ProjectCRSProj4String>
             <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
             <ProjectCRSID type="int">3116</ProjectCRSID>
-            <ProjectionsEnabled type="int">0</ProjectionsEnabled>
+            <ProjectionsEnabled type="int">1</ProjectionsEnabled>
         </SpatialRefSys>
         <DefaultStyles>
             <Fill type="QString"></Fill>
