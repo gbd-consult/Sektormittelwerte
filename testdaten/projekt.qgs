@@ -23,28 +23,28 @@
             </spatialrefsys>
         </destinationsrs>
     </mapcanvas>
-    <legend updateDrawingOrder="true" activeLayer="corine2006_z0_utm20130816170716397">
+    <legend updateDrawingOrder="true">
         <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_test100" showFeatureCount="0">
             <filegroup open="true" hidden="false">
                 <legendlayerfile isInOverview="0" layerid="mm_2012_test10020130816142050353" visible="1"/>
             </filegroup>
         </legendlayer>
-        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0-utm" showFeatureCount="0">
+        <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0_utm32" showFeatureCount="0">
             <filegroup open="false" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm20130816170716397" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm3220130816180602582" visible="1"/>
             </filegroup>
         </legendlayer>
     </legend>
     <projectlayers layercount="2">
         <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
-            <id>corine2006_z0_utm20130816170716397</id>
-            <datasource>./corine2006_z0-utm.grid</datasource>
+            <id>corine2006_z0_utm3220130816180602582</id>
+            <datasource>/vsizip//arbeit/github/sectormean/testdaten/corine2006_z0_utm32.zip</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
                 <value></value>
             </keywordList>
-            <layername>corine2006_z0-utm</layername>
+            <layername>corine2006_z0_utm32</layername>
             <srs>
                 <spatialrefsys>
                     <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
@@ -313,9 +313,9 @@
                 <edittype labelontop="0" editable="1" type="0" name="stlat"/>
                 <edittype labelontop="0" editable="1" type="0" name="stlon"/>
             </edittypes>
-            <editform></editform>
+            <editform>.</editform>
             <editforminit></editforminit>
-            <annotationform></annotationform>
+            <annotationform>.</annotationform>
             <editorlayout>generatedlayout</editorlayout>
             <excludeAttributesWMS/>
             <excludeAttributesWFS/>
@@ -341,8 +341,8 @@
             <Automatic type="bool">true</Automatic>
             <DegreeFormat type="QString">D</DegreeFormat>
         </PositionPrecision>
-        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
         <WMSContactPhone type="QString"></WMSContactPhone>
+        <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
         <WMSServiceAbstract type="QString"></WMSServiceAbstract>
         <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
         <Measure>
