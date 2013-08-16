@@ -256,13 +256,14 @@ class SectorMeanDialog(QtGui.QDialog):
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
         pmean = [] 
+        # Fuer jede Station in der CSV Datei
         for feature in csvLayer.getFeatures():
             self.station = feature.attributes()[0]
             self.stlon = feature.attributes()[1]
             self.stlat = feature.attributes()[2]
             self.distm = feature.attributes()[3] 
             
-            # Latitude Daten von WGS84 nach UTM32N WGS84 transformieren
+            # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             self.xutm32, self.yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, self.stlon, self.stlat)
             
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
