@@ -39,15 +39,18 @@ from qgis.gui import *
 from qgis.analysis import QgsZonalStatistics
 
 # Module fuer den Sektorkreis
-from shapely.geometry import Point, Polygon
 import math
 import csv
+try:
+    from shapely.geometry import Point, Polygon
+except ImportError:
+    QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul shapely ist nicht installiert" ) )
 
 # Module fuers Umprojizieren
 try:
 	import pyproj
 except ImportError:
-	QMessageBox.warning( self, self.tr( "Weibullauswertung: Fehler" ), self.tr( "Python Modul pyproj ist nicht installiert" ) )
+	QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul pyproj ist nicht installiert" ) )
 
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self,  iface):
@@ -255,22 +258,28 @@ class SectorMeanDialog(QtGui.QDialog):
         csvAllAttrs = csvProvider.attributeIndexes()
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
-        pmean = [] 
+        pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = [] ; pyutm32 = [] ; pisect0 = [] 
         # Fuer jede Station in der CSV Datei
         for feature in csvLayer.getFeatures():
-            self.station = feature.attributes()[0]
-            self.stlon = feature.attributes()[1]
-            self.stlat = feature.attributes()[2]
-            self.distm = feature.attributes()[3] 
+            station = feature.attributes()[0]
+            pstation.append(station)
+            stlon = feature.attributes()[1]
+            pstlon.append(stlon)
+            stlat = feature.attributes()[2]
+            pstlat.append(stlat)
+            distm = feature.attributes()[3] 
+            pdistm.append(distm)
             
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
-            self.xutm32, self.yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, self.stlon, self.stlat)
+            xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
+            pxutm32.append(xutm32)
+            pyutm32.append(yutm32)
             
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
             # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
             vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
             pFeature = QgsFeature()
-            pFeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xutm32, self.yutm32)).buffer(self.distm,5))
+            pFeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xutm32, yutm32)).buffer(distm,5))
             pProvider = vpoly.dataProvider()
             pProvider.addFeatures( [pFeature] )
             vpoly.commitChanges()
@@ -278,8 +287,9 @@ class SectorMeanDialog(QtGui.QDialog):
             pStats.calculateStatistics(None)
             vAllAttrs = pProvider.attributeIndexes()       
             for vfeat in vpoly.getFeatures():
-                self.isect0 = vfeat.attributes()[2]
-                
+                isect0 = vfeat.attributes()[2]
+                pisect0.append(isect0)
+
 #            # Erzeugen von Mittelerten fuer 12 Sektoren
 #            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
 #            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
@@ -299,12 +309,12 @@ class SectorMeanDialog(QtGui.QDialog):
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
-        # Test: Ausgabe als CSV
+        # Ausgabe als CSV Datei mit einer Zeile für jede Station
         header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0']
         with open(self.fileName, 'wb') as csvfile:
             datawriter = csv.writer(csvfile)		
             # schreibe Kopfzeile
             datawriter.writerow(header)
             # schreibe Daten
-            #for int1, fp1, fp2, int1, int2, int3, fp3 in (self.station, self.stlon ,self.stlat, self.xutm32, self.yutm32, self.distm, self.isect0):
-            datawriter.writerow((self.station, self.stlon ,self.stlat, self.xutm32, self.yutm32, self.distm, self.isect0))
+            for int1, fp1, fp2, fp3, fp4, int2, fp5 in zip(pstation, pstlon, pstlat, pxutm32, pxutm32, pdistm, pisect0):
+                datawriter.writerow((int1, fp1, fp2, fp3, fp4, int2, fp5))
