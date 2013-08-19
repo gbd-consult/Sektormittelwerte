@@ -207,48 +207,6 @@ class SectorMeanDialog(QtGui.QDialog):
         for feature in vpoly.getFeatures():
             mean_value = feature.attributes()[2]
             return mean_value
-
-    # Erstelle einen Kreis aus 12 Sektoren
-    def sectorCircle(self):  
-        # Initialisiere Parameters für die Sektoren
-        steps = 90 # subdivision of circle. The higher, the smoother it will be
-        sectors = 12.0 # number of sectors in the circle (12 means 30 degrees per sector)
-        radius = distm # circle radius
-        start = 345.0 # start of circle in degrees
-        # FIXME: nicht exakt geschlossen
-        end = 344.99999999 # end of circle in degrees
-        center = Point(xCoord, yCoord)
-        
-        # prepare parameters
-        if start > end:
-            start = start - 360
-        else:
-            pass
-        step_angle_width = (end-start) / steps
-        sector_width = (end-start) / sectors
-        steps_per_sector = int(math.ceil(steps / sectors))
-        
-        # helper function to calculate point from relative polar coordinates (degrees)
-        def polar_point(origin_point, angle,  distance):
-            return [origin_point.x + math.sin(math.radians(angle)) * distance, origin_point.y + math.cos(math.radians(angle)) * distance]
-        
-        features = []
-        for x in xrange(0,int(sectors)):
-            segment_vertices = []
-        
-        # first the center and first point
-        segment_vertices.append(polar_point(center, xCoord, yCoord))
-        segment_vertices.append(polar_point(center, start + x*sector_width,radius))
-        
-        # then the sector outline points
-        for z in xrange(1, steps_per_sector):
-            segment_vertices.append((polar_point(center, start + x * sector_width + z * step_angle_width,radius)))
-        
-        # then again the center point to finish the polygon
-        segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
-        segment_vertices.append(polar_point(center, xCoord, yCoord))
-        sectorcircle = segment_vertices
-        return sectorcircle
         
     def saveCSV(self):
         # CSV Layer auslesen
@@ -258,7 +216,7 @@ class SectorMeanDialog(QtGui.QDialog):
         csvAllAttrs = csvProvider.attributeIndexes()
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
-        pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = [] ; pyutm32 = [] ; pisect0 = [] 
+        pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = [] ; pyutm32 = [] ; pisect0 = [] ; smean = [] ; wktfeatures = []
         # Fuer jede Station in der CSV Datei
         for feature in csvLayer.getFeatures():
             station = feature.attributes()[0]
@@ -290,31 +248,76 @@ class SectorMeanDialog(QtGui.QDialog):
                 isect0 = vfeat.attributes()[2]
                 pisect0.append(isect0)
 
-#            # Erzeugen von Mittelerten fuer 12 Sektoren
-#            # leeren Memorylayer erzeugen mit 12 Sektoren, dem Radius [distm] um die Position [stx],[sty]
-#            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-#            sFeature = QgsFeature()
-#            #sfeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xCoord, yCoord)).buffer(distm,5))
-#            sProvider = spoly.dataProvider()
-#            sProvider.addFeatures( [sFeature] )
-#            spoly.commitChanges()
-#            sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
-#            sStats.calculateStatistics(None)
-#            sAllAttrs = sProvider.attributeIndexes()       
-#            for sfeat in spoly.getFeatures():
-#                smean_value = sfeat.attributes()[2]
-#                smean.append(smean_value)
-#                stat.append(station)
+            # Initialisiere Parameters für die Sektoren
+            steps = 90 # subdivision of circle. The higher, the smoother it will be
+            sectors = 12.0 # Anzahl der Sektoren (12 bedeutet 30 Grad pro Sektor)
+            radius = distm # Kreisradius aus Steuerdatei 
+            start = 345.0 # Start des Kreises in Degrees
+            # FIXME: nicht exakt geschlossen
+            end = 344.99999999 # Ende des Kreises in Degrees
+            center = Point(xutm32, yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
+        
+            # prepare parameters
+            if start > end:
+                start = start - 360
+            else:
+                pass
+            
+            step_angle_width = (end-start) / steps
+            sector_width = (end-start) / sectors
+            steps_per_sector = int(math.ceil(steps / sectors))
+        
+            # helper function to calculate point from relative polar coordinates (degrees)
+            def polar_point(origin_point, angle,  distance):
+                return [origin_point.x + math.sin(math.radians(angle)) * distance, origin_point.y + math.cos(math.radians(angle)) * distance]
+            
+            wktfeatures = []
+            for x in xrange(0,int(sectors)):
+                segment_vertices = []
+            
+                # first the center and first point
+                segment_vertices.append(polar_point(center, xutm32, yutm32))
+                segment_vertices.append(polar_point(center, start + x*sector_width,radius))
+                
+                # then the sector outline points
+                for z in xrange(1, steps_per_sector):
+                    segment_vertices.append((polar_point(center, start + x * sector_width + z * step_angle_width,radius)))
+        
+                # then again the center point to finish the polygon
+                segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
+                segment_vertices.append(polar_point(center, xutm32, yutm32))
+                sectorcircle = segment_vertices    
+        
+                # create circle features as WKT
+                wktfeature  = Polygon(sectorcircle).wkt
+                
+            # Erzeugen von Mittelerten fuer 12 Sektoren
+            # leeren Memorylayer erzeugen mit 12 Sektoren auf Basis von sectorCircle()
+            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+            sFeature = QgsFeature()
+            sFeature.setGeometry(QgsGeometry.fromWkt(wktfeature))
+            sProvider = spoly.dataProvider()
+            sProvider.addFeatures( [sFeature] )
+            spoly.commitChanges()
+            sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
+            sStats.calculateStatistics(None)
+            sAllAttrs = sProvider.attributeIndexes()
+            # FIXME: Testen, was smean enthält
+            for sfeat in spoly.getFeatures():
+                smean_value = sfeat.attributes()[2]
+                smean.append(smean_value)
+                
 
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
         # Ausgabe als CSV Datei mit einer Zeile für jede Station
-        header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0']
+        header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0',  'isect1', 'isect2', 'isect3', 'isect4', 
+        'isect5', 'isect6', 'isect7', 'isect8',  'isect9', 'isect10', 'isect11', 'isect12']
         with open(self.fileName, 'wb') as csvfile:
             datawriter = csv.writer(csvfile)		
             # schreibe Kopfzeile
             datawriter.writerow(header)
             # schreibe Daten
-            for int1, fp1, fp2, fp3, fp4, int2, fp5 in zip(pstation, pstlon, pstlat, pxutm32, pxutm32, pdistm, pisect0):
-                datawriter.writerow((int1, fp1, fp2, fp3, fp4, int2, fp5))
+            for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, smean):
+                datawriter.writerow((int1, fp1, fp2, fp3, fp4, int2, fp5, lst1))
