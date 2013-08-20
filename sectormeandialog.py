@@ -230,7 +230,8 @@ class SectorMeanDialog(QtGui.QDialog):
             
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
-            pxutm32.append(xutm32)
+            # Koordinate um Zonenzahl erweitern für die Ausgabe
+            pxutm32.append(xutm32 + 32000000)
             pyutm32.append(yutm32)
             
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
