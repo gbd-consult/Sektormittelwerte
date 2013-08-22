@@ -216,7 +216,8 @@ class SectorMeanDialog(QtGui.QDialog):
         csvAllAttrs = csvProvider.attributeIndexes()
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
-        pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = [] ; pyutm32 = [] ; pisect0 = [] ; smean = [] ; wktfeatures = []
+        pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = []
+        pyutm32 = [] ; pisect0 = [] ; pisectx = [] ; wktfeatures = []
         # Fuer jede Station in der CSV Datei
         for feature in csvLayer.getFeatures():
             station = feature.attributes()[0]
@@ -231,7 +232,8 @@ class SectorMeanDialog(QtGui.QDialog):
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
             # Koordinate um Zonenzahl erweitern für die Ausgabe
-            pxutm32.append(xutm32 + 32000000)
+            #pxutm32.append(xutm32 + 32000000)
+            pxutm32.append(xutm32)
             pyutm32.append(yutm32)
             
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
@@ -252,11 +254,11 @@ class SectorMeanDialog(QtGui.QDialog):
             # Initialisiere Parameters für die Sektoren
             steps = 90 # subdivision of circle. The higher, the smoother it will be
             sectors = 12.0 # Anzahl der Sektoren (12 bedeutet 30 Grad pro Sektor)
-            radius = distm # Kreisradius aus Steuerdatei 
+            radius = 3000.0 # Kreisradius aus Steuerdatei  - distm
             start = 345.0 # Start des Kreises in Degrees
             # FIXME: nicht exakt geschlossen
             end = 344.99999999 # Ende des Kreises in Degrees
-            center = Point(xutm32, yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
+            center = Point(xutm32,yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
         
             # prepare parameters
             if start > end:
@@ -277,7 +279,7 @@ class SectorMeanDialog(QtGui.QDialog):
                 segment_vertices = []
             
                 # first the center and first point
-                segment_vertices.append(polar_point(center, xutm32, yutm32))
+                segment_vertices.append(polar_point(center, 0, 0))
                 segment_vertices.append(polar_point(center, start + x*sector_width,radius))
                 
                 # then the sector outline points
@@ -286,29 +288,30 @@ class SectorMeanDialog(QtGui.QDialog):
         
                 # then again the center point to finish the polygon
                 segment_vertices.append(polar_point(center, start + x * sector_width+sector_width,radius))
-                segment_vertices.append(polar_point(center, xutm32, yutm32))
+                segment_vertices.append(polar_point(center, 0, 0))
                 sectorcircle = segment_vertices    
         
                 # create circle features as WKT
-                wktfeature  = Polygon(sectorcircle).wkt
+                wktfeatures.append(Polygon(sectorcircle).wkt)
+                wktcircles = wktfeatures
                 
             # Erzeugen von Mittelerten fuer 12 Sektoren
             # leeren Memorylayer erzeugen mit 12 Sektoren auf Basis von sectorCircle()
-            spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
-            sFeature = QgsFeature()
-            sFeature.setGeometry(QgsGeometry.fromWkt(wktfeature))
-            sProvider = spoly.dataProvider()
-            sProvider.addFeatures( [sFeature] )
-            spoly.commitChanges()
-            sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
-            sStats.calculateStatistics(None)
-            sAllAttrs = sProvider.attributeIndexes()
-            # FIXME: Testen, was smean enthält
-            for sfeat in spoly.getFeatures():
-                smean_value = sfeat.attributes()[2]
-                smean.append(smean_value)
-                
-
+            for sector in wktcircles:
+                spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+                sFeature = QgsFeature()
+                sFeature.setGeometry(QgsGeometry.fromWkt(sector))
+                sProvider = spoly.dataProvider()
+                sProvider.addFeatures( [sFeature] )
+                spoly.commitChanges()
+                sStats = QgsZonalStatistics(spoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
+                sStats.calculateStatistics(None)
+                sAllAttrs = sProvider.attributeIndexes()
+                # FIXME: Testen, was smean enthält
+                for sfeat in spoly.getFeatures():
+                    smean_value = sfeat.attributes()[2]
+                    pisectx.append(smean_value)
+            
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
@@ -320,5 +323,8 @@ class SectorMeanDialog(QtGui.QDialog):
             # schreibe Kopfzeile
             datawriter.writerow(header)
             # schreibe Daten
-            for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, smean):
-                datawriter.writerow((int1, fp1, fp2, fp3, fp4, int2, fp5, lst1))
+            for int1, fp1, fp2, fp3, fp4, int2, fp5 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0):
+                cols = int1, fp1, fp2, fp3, fp4, int2, fp5, pisectx
+                datawriter.writerow(cols)
+                
+
