@@ -217,7 +217,7 @@ class SectorMeanDialog(QtGui.QDialog):
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
         pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = []
-        pyutm32 = [] ; pisect0 = [] ; pisectx = [] ; wktfeatures = []
+        pyutm32 = [] ; pisect0 = [] ; pisectx = []
         # Fuer jede Station in der CSV Datei
         for feature in csvLayer.getFeatures():
             station = feature.attributes()[0]
@@ -246,6 +246,8 @@ class SectorMeanDialog(QtGui.QDialog):
             pStats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
             pStats.calculateStatistics(None)
             vAllAttrs = pProvider.attributeIndexes()      
+            
+            wktfeatures = []
             for vfeat in vpoly.getFeatures():
                 # Wert auf 2 Nachkommastellen runden
                 isect0 = round(vfeat.attributes()[2],  2)
@@ -296,6 +298,7 @@ class SectorMeanDialog(QtGui.QDialog):
                 
             # Erzeugen von Mittelerten fuer 12 Sektoren
             # leeren Memorylayer erzeugen mit 12 Sektoren auf Basis von sectorCircle()
+            mean = []
             for sector in wktcircles:
                 spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
                 sFeature = QgsFeature()
@@ -309,8 +312,10 @@ class SectorMeanDialog(QtGui.QDialog):
                 # FIXME: Testen, was smean enthält
                 for sfeat in spoly.getFeatures():
                     # Wert auf 2 Nachkommastellen runden
-                    smean_value = round(sfeat.attributes()[2],  2)
-                    pisectx.append(smean_value)
+                    mean_value = round(sfeat.attributes()[2],  2)
+                    mean.append(mean_value)
+            # Sektor-Meanwerte je Station zusammenfassen
+            pisectx.append(mean)
             
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
@@ -323,8 +328,8 @@ class SectorMeanDialog(QtGui.QDialog):
             # schreibe Kopfzeile
             datawriter.writerow(header)
             # schreibe Daten
-            for int1, fp1, fp2, fp3, fp4, int2, fp5 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0):
-                cols = int1, fp1, fp2, fp3, fp4, int2, fp5, pisectx
+            for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
+                cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1
                 datawriter.writerow(cols)
                 
 
