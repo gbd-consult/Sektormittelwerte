@@ -231,10 +231,9 @@ class SectorMeanDialog(QtGui.QDialog):
             
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
-            # Koordinate um Zonenzahl erweitern für die Ausgabe
-            #pxutm32.append(xutm32 + 32000000)
-            pxutm32.append(xutm32)
-            pyutm32.append(yutm32)
+            # Koordinate um Zonenzahl erweitern für die Ausgabe und auf zwei Nachkommastellen runden
+            pxutm32.append(round(xutm32, 2) + 32000000)
+            pyutm32.append(round(yutm32, 2))
             
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
             # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
@@ -246,9 +245,10 @@ class SectorMeanDialog(QtGui.QDialog):
             vpoly.commitChanges()
             pStats = QgsZonalStatistics(vpoly, self.getRasterLayerByName( self.ui.InRast.currentText() ).source())
             pStats.calculateStatistics(None)
-            vAllAttrs = pProvider.attributeIndexes()       
+            vAllAttrs = pProvider.attributeIndexes()      
             for vfeat in vpoly.getFeatures():
-                isect0 = vfeat.attributes()[2]
+                # Wert auf 2 Nachkommastellen runden
+                isect0 = round(vfeat.attributes()[2],  2)
                 pisect0.append(isect0)
 
             # Initialisiere Parameters für die Sektoren
@@ -274,10 +274,9 @@ class SectorMeanDialog(QtGui.QDialog):
             def polar_point(origin_point, angle,  distance):
                 return [origin_point.x + math.sin(math.radians(angle)) * distance, origin_point.y + math.cos(math.radians(angle)) * distance]
             
-            wktfeatures = []
             for x in xrange(0,int(sectors)):
                 segment_vertices = []
-            
+                
                 # first the center and first point
                 segment_vertices.append(polar_point(center, 0, 0))
                 segment_vertices.append(polar_point(center, start + x*sector_width,radius))
@@ -309,7 +308,8 @@ class SectorMeanDialog(QtGui.QDialog):
                 sAllAttrs = sProvider.attributeIndexes()
                 # FIXME: Testen, was smean enthält
                 for sfeat in spoly.getFeatures():
-                    smean_value = sfeat.attributes()[2]
+                    # Wert auf 2 Nachkommastellen runden
+                    smean_value = round(sfeat.attributes()[2],  2)
                     pisectx.append(smean_value)
             
         self.standortname = self.ui.InPoint.currentText()
