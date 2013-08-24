@@ -1,5 +1,5 @@
-sectormean
-==========
+Sektormittelwerte
+=================
 
 Sektorgemittelter Parameter z0
 
