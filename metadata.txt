@@ -9,7 +9,7 @@
 
 
 [general]
-name=sectormean
+name=Sektormittelwerte
 qgisMinimumVersion=2.0
 description=Ermittlung sektorgemittelter Rasterwerte
 version=0.1

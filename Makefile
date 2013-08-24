@@ -29,7 +29,7 @@ TRANSLATIONS =
 
 # global
 
-PLUGINNAME = sectormean
+PLUGINNAME = Sektormittelwerte
 
 PY_FILES = sectormean.py sectormeandialog.py __init__.py
 

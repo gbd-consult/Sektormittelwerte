@@ -23,7 +23,7 @@ for feature in pLayer.getFeatures():
     provider = vpoly.dataProvider()
     provider.addFeatures( [feature] )
     vpoly.commitChanges()
-    stats = qgis.analysis.QgsZonalStatistics(vpoly,"/arbeit/github/sectormean/testdaten/corine2006_z0_test.tif")
+    stats = qgis.analysis.QgsZonalStatistics(vpoly,"/arbeit/github/Sektormittelwerte/testdaten/corine2006_z0_test.tif")
     stats.calculateStatistics(None)
     allAttrs = provider.attributeIndexes()       
     for vfeat in vpoly.getFeatures():

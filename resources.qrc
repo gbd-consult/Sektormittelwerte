@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/sectormean" >
+    <qresource prefix="/plugins/Sektormittelwerte" >
         <file>icon.png</file>
     </qresource>
 </RCC>

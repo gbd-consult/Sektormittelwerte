@@ -64,7 +64,7 @@ for x in xrange(0,int(sectors)):
     sProvider = spoly.dataProvider()
     sProvider.addFeatures( [sFeature] )
     spoly.commitChanges()
-    sStats = QgsZonalStatistics(spoly, "/home/dassau/arbeit/github/sectormean/testdaten/corine2006_z0_utm32.zip")
+    sStats = QgsZonalStatistics(spoly, "/home/dassau/arbeit/github/Sektormittelwerte/testdaten/corine2006_z0_utm32.zip")
     sStats.calculateStatistics(None)
     sAllAttrs = sProvider.attributeIndexes()
     # FIXME: Testen, was smean enthaelt

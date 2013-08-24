@@ -53,7 +53,7 @@ class SectorMean:
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
-            QIcon(":/plugins/sectormean/icon.png"),
+            QIcon(":/plugins/Sektormittelwerte/icon.png"),
             u"Sektorgemittelte Rasterwerte", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)

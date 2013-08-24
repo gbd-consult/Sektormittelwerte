@@ -4,10 +4,10 @@
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>293517.26506086176959798</xmin>
-            <ymin>5847473.02792532369494438</ymin>
-            <xmax>603917.78392008016817272</xmax>
-            <ymax>6091962.13953723944723606</ymax>
+            <xmin>271776.31332384306006134</xmin>
+            <ymin>5712270.27405331749469042</ymin>
+            <xmax>582176.83218306140042841</xmax>
+            <ymax>6057542.41847092192620039</ymax>
         </extent>
         <projections>1</projections>
         <destinationsrs>
@@ -48,7 +48,7 @@
     <projectlayers layercount="4">
         <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
             <id>corine2006_z0_utm3220130816180602582</id>
-            <datasource>/vsizip//arbeit/github/sectormean/testdaten/corine2006_z0_utm32.zip</datasource>
+            <datasource>/vsizip//arbeit/github/Sektormittelwerte/testdaten/corine2006_z0_utm32.zip</datasource>
             <title></title>
             <abstract></abstract>
             <keywordList>
