@@ -243,10 +243,10 @@ class SectorMeanDialog(QtGui.QDialog):
             self.ui.progressBar.setValue(nElement)
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
-            # Koordinate um Zonenzahl erweitern für die Ausgabe und auf zwei Nachkommastellen runden
-            pxutm32.append(round(xutm32, 2) + 32000000)
-            pyutm32.append(round(yutm32, 2))
-            
+            # Koordinate um Zonenzahl erweitern für die Ausgabe und auf nächste Ganzzahl runden
+            pxutm32.append(math.trunc(xutm32) + 32000000)
+            pyutm32.append(math.trunc(yutm32))
+            math.trunc
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
             # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
             vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
