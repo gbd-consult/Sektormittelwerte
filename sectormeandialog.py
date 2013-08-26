@@ -35,7 +35,7 @@ from ui_sectormean import Ui_SectorMean
 from qgis.core import *
 from qgis.gui import *
 
-# fuer die Berechung des Mittelwertes
+# fuer die Berechung der Mittelwerte
 from qgis.analysis import QgsZonalStatistics
 
 # Module fuer den Sektorkreis
@@ -51,6 +51,7 @@ try:
 	import pyproj
 except ImportError:
 	QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul pyproj ist nicht installiert" ) )
+
 
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self,  iface):
@@ -81,6 +82,9 @@ class SectorMeanDialog(QtGui.QDialog):
 
         # Setze Radius (z0) für die Berechnung der Mittelwertes des Gesamtkreises
         self.buffer = self.ui.bufferz0.value()
+
+        # Setze Fortschrittbalken auf 0
+        self.ui.progressBar.setValue(0)
 
         # KBS fuer das Umprojizieren definieren (Corine ist in 32632 abgelegt)
         self.wgs84 = pyproj.Proj("+init=EPSG:4326")
@@ -133,12 +137,12 @@ class SectorMeanDialog(QtGui.QDialog):
     def accept(self):
         # check input parameters
         if self.ui.InPoint.currentIndex()  == -1:
-            QMessageBox.warning( self, self.tr( "Warning" ),
-                self.tr( "Please select Point layer" ) )
+            QMessageBox.warning( self, self.tr( "Warnung" ),
+                self.tr( "Bitte einen Punktlayer selektieren" ) )
             return
         if self.ui.InRast.currentIndex()  == -1:
-            QMessageBox.warning( self, self.tr( "Warning" ),
-                self.tr( "Please select Raster layer" ) )
+            QMessageBox.warning( self, self.tr( "Warnung" ),
+                self.tr( "Bitte einen Rasterlayer auswählen" ) )
             return
 
     # Return QgsMapLayer.RasterLayer (only gdal) from a layer name ( as string )
@@ -207,13 +211,19 @@ class SectorMeanDialog(QtGui.QDialog):
         for feature in vpoly.getFeatures():
             mean_value = feature.attributes()[2]
             return mean_value
-        
+
+    # Daten generieren und als CSV Tabelle rausschreiben
     def saveCSV(self):
         # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
         csvProvider = csvLayer.dataProvider()
         csvFeature = QgsFeature()
         csvAllAttrs = csvProvider.attributeIndexes()
+        # Fortschrittbalken auf Basis der Stationen
+        nFeat = csvProvider.featureCount()
+        self.ui.progressBar.setValue(0)
+        self.ui.progressBar.setRange(0, nFeat)
+        nElement = 0
         # fuer jedes Objekt eine Puffer anhand der Parameter xCoord, yCoord und distm erstellen
         # und in einen memory Layer schreiben
         pstation = [] ; pstlon =[] ; pstlat = [] ; pdistm = [] ; pxutm32 = []
@@ -228,7 +238,9 @@ class SectorMeanDialog(QtGui.QDialog):
             pstlat.append(stlat)
             distm = feature.attributes()[3] 
             pdistm.append(distm)
-            
+            # Wert des Fortschrittbalkens setzen
+            nElement += 1
+            self.ui.progressBar.setValue(nElement)
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
             xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
             # Koordinate um Zonenzahl erweitern für die Ausgabe und auf zwei Nachkommastellen runden
