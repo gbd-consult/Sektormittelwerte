@@ -55,7 +55,8 @@ except ImportError:
 
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self,  iface):
-        QDialog.__init__(self)
+        # always put the plugin dialog on top 
+        QDialog.__init__(self,  None, Qt.WindowStaysOnTopHint)
         # Set up the user interface from Designer.
         self.ui = Ui_SectorMean()
         self.ui.setupUi(self)
@@ -196,10 +197,10 @@ class SectorMeanDialog(QtGui.QDialog):
         layer = self.getRasterLayerByName(raster_name)
         return self.sampleRaster20(layer, x, y)
 
-    # Berechne Mittelwert fuer Gesamtkreis an Mouseposition 
+    # Berechne Mittelwert interaktiv fuer Gesamtkreis an Mouseposition 
     def meanBuffer(self):
-        # leeren Memorylayer erzeugen für den Puffer z0 um die Mousepoition
-        vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+        # leeren Memorylayer mit KBS WGS84 erzeugen für den Puffer z0 um die Mousepoition
+        vpoly = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
         feature = QgsFeature()
         feature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.ui.bufferz0.value(),5))
         provider = vpoly.dataProvider()
@@ -249,7 +250,7 @@ class SectorMeanDialog(QtGui.QDialog):
             math.trunc
             # Erzeugen des Mittelwertes ueber den Gesamtkreis
             # leeren Memorylayer erzeugen mit Radius [distm] um die Position [stx],[sty]
-            vpoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+            vpoly = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
             pFeature = QgsFeature()
             pFeature.setGeometry(QgsGeometry.fromPoint(QgsPoint(xutm32, yutm32)).buffer(distm,5))
             pProvider = vpoly.dataProvider()
@@ -312,7 +313,7 @@ class SectorMeanDialog(QtGui.QDialog):
             # leeren Memorylayer erzeugen mit 12 Sektoren auf Basis von sectorCircle()
             mean = []
             for sector in wktcircles:
-                spoly = QgsVectorLayer("Polygon", "pointbuffer", "memory")
+                spoly = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
                 sFeature = QgsFeature()
                 sFeature.setGeometry(QgsGeometry.fromWkt(sector))
                 sProvider = spoly.dataProvider()
@@ -328,11 +329,14 @@ class SectorMeanDialog(QtGui.QDialog):
                     mean.append(mean_value)
             # Sektor-Meanwerte je Station zusammenfassen
             pisectx.append(mean)
-            
+
+        # Setze Fortschrittbalken wieder auf 0
+        self.ui.progressBar.setValue(0)
+
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
-        # Ausgabe als CSV Datei mit einer Zeile für jede Station
+# Ausgabe als CSV Datei mit einer Zeile für jede Station
         header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0',  'isect1', 'isect2', 'isect3', 'isect4', 
         'isect5', 'isect6', 'isect7', 'isect8',  'isect9', 'isect10', 'isect11', 'isect12']
         with open(self.fileName, 'wb') as csvfile:
@@ -343,5 +347,6 @@ class SectorMeanDialog(QtGui.QDialog):
             for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
                 cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1
                 datawriter.writerow(cols)
+                
                 
 
