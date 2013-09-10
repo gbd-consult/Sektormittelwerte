@@ -122,8 +122,11 @@ class SectorMeanDialog(QtGui.QDialog):
             
     # Gebe Mittelwert der Rauhigkeit an Mousepositon aus und überschreibe vorherige (append ergänzt)
     def listen_z0(self, point):
-         mean = float(self.meanBuffer())
-         self.ui.outputMean.setText("%.2f" % (mean))
+        if self.meanBuffer() is not None:
+            mean = float(self.meanBuffer())
+            self.ui.outputMean.setText("%.2f" % (mean))
+        else:
+            self.ui.outputMean.setText("kein Wert")
 
     def add_layer(self, layerid):
         self.initVectorLayerCombobox( self.ui.InPoint, self.ui.InPoint.currentText() )
@@ -262,10 +265,13 @@ class SectorMeanDialog(QtGui.QDialog):
             
             wktfeatures = []
             for vfeat in vpoly.getFeatures():
-                # Wert auf 2 Nachkommastellen runden
-                isect0 = round(vfeat.attributes()[2],  2)
+                # Wert auf 2 Nachkommastellen runden und NoData auf -9999 setzen
+                if vfeat.attributes()[2] is not None:
+                    isect0 = round(vfeat.attributes()[2],  2)
+                else:
+                    isect0 = -9999
                 pisect0.append(isect0)
-
+                
             # Initialisiere Parameters für die Sektoren
             steps = 90 # subdivision of circle. The higher, the smoother it will be
             sectors = 12.0 # Anzahl der Sektoren (12 bedeutet 30 Grad pro Sektor)
@@ -323,9 +329,12 @@ class SectorMeanDialog(QtGui.QDialog):
                 sStats.calculateStatistics(None)
                 sAllAttrs = sProvider.attributeIndexes()
                 # FIXME: Testen, was smean enthält
-                for sfeat in spoly.getFeatures():
-                    # Wert auf 2 Nachkommastellen runden
-                    mean_value = round(sfeat.attributes()[2],  2)
+                for sfeat in spoly.getFeatures():                
+                    # Wert auf 2 Nachkommastellen runden und NoData auf -9999 setzen
+                    if sfeat.attributes()[2] is not None:
+                        mean_value = round(sfeat.attributes()[2],  2)
+                    else:
+                        mean_value = -9999
                     mean.append(mean_value)
             # Sektor-Meanwerte je Station zusammenfassen
             pisectx.append(mean)

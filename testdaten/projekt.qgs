@@ -1,13 +1,13 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="" version="1.9.0-Master">
+<qgis projectname="" version="2.0.0-Dufour">
     <title></title>
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>271776.31332384306006134</xmin>
-            <ymin>5712270.27405331749469042</ymin>
-            <xmax>582176.83218306140042841</xmax>
-            <ymax>6057542.41847092192620039</ymax>
+            <xmin>312728.7326898374594748</xmin>
+            <ymin>5721465.27124153636395931</ymin>
+            <xmax>795006.33521189750172198</xmax>
+            <ymax>6066737.41565914079546928</ymax>
         </extent>
         <projections>1</projections>
         <destinationsrs>
