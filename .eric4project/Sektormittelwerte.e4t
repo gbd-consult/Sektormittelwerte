@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-4.2.dtd">
 <!-- eric4 tasks file for project Sektormittelwerte -->
-<!-- Saved: 2013-09-10, 17:52:19 -->
+<!-- Saved: 2013-09-16, 09:59:36 -->
 <Tasks version="4.2">
   <Task priority="1" completed="False" bugfix="True">
     <Summary>FIXME: Das Löschen von Layern wird nicht richtig übernommen</Summary>
     <Description></Description>
-    <Created>2013-09-10, 17:48:53</Created>
+    <Created>2013-09-16, 09:44:09</Created>
     <Resource>
       <Filename>sectormeandialog.py</Filename>
       <Linenumber>135</Linenumber>
@@ -15,7 +15,7 @@
   <Task priority="1" completed="False" bugfix="True">
     <Summary>FIXME: nicht exakt geschlossen</Summary>
     <Description></Description>
-    <Created>2013-09-10, 17:48:53</Created>
+    <Created>2013-09-16, 09:44:09</Created>
     <Resource>
       <Filename>sectormeandialog.py</Filename>
       <Linenumber>280</Linenumber>
@@ -24,7 +24,7 @@
   <Task priority="1" completed="False" bugfix="True">
     <Summary>FIXME: Testen, was smean enthält</Summary>
     <Description></Description>
-    <Created>2013-09-10, 17:48:53</Created>
+    <Created>2013-09-16, 09:44:09</Created>
     <Resource>
       <Filename>sectormeandialog.py</Filename>
       <Linenumber>331</Linenumber>
