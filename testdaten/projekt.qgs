@@ -23,7 +23,7 @@
             </spatialrefsys>
         </destinationsrs>
     </mapcanvas>
-    <legend updateDrawingOrder="true" activeLayer="mm_2012_test120130820190812935">
+    <legend updateDrawingOrder="true" activeLayer="mm_2012_test520130819232049192">
         <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_test1" showFeatureCount="0">
             <filegroup open="true" hidden="false">
                 <legendlayerfile isInOverview="0" layerid="mm_2012_test120130820190812935" visible="1"/>

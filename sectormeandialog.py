@@ -275,10 +275,11 @@ class SectorMeanDialog(QtGui.QDialog):
             # Initialisiere Parameters für die Sektoren
             steps = 90 # subdivision of circle. The higher, the smoother it will be
             sectors = 12.0 # Anzahl der Sektoren (12 bedeutet 30 Grad pro Sektor)
-            radius = float(distm) # Kreisradius aus Steuerdatei muss float sein
+            # radius = 3000.0 # Kreisradius aus Steuerdatei  - distm
+            radius = float(distm) # Kreisradius aus Steuerdatei  - distm 
             start = 345.0 # Start des Kreises in Degrees
             # FIXME: nicht exakt geschlossen
-            end = 344.99999999999999999999999 # Ende des Kreises in Degrees
+            end = 344.99999999 # Ende des Kreises in Degrees
             center = Point(xutm32,yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
         
             # prepare parameters
