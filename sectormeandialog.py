@@ -267,7 +267,8 @@ class SectorMeanDialog(QtGui.QDialog):
             for vfeat in vpoly.getFeatures():
                 # Wert auf 2 Nachkommastellen runden und NoData auf -9999 setzen
                 if vfeat.attributes()[2] is not None:
-                    isect0 = round(vfeat.attributes()[2],  2)
+                    # always format with 2 decimals
+                    isect0 = '{:.2f}'.format(round(vfeat.attributes()[2],  2))
                 else:
                     isect0 = -9999
                 pisect0.append(isect0)
@@ -333,7 +334,8 @@ class SectorMeanDialog(QtGui.QDialog):
                 for sfeat in spoly.getFeatures():                
                     # Wert auf 2 Nachkommastellen runden und NoData auf -9999 setzen
                     if sfeat.attributes()[2] is not None:
-                        mean_value = round(sfeat.attributes()[2],  2)
+                        # always format with 2 decimals
+                        mean_value = '{:.2f}'.format(round(sfeat.attributes()[2],  2))
                     else:
                         mean_value = -9999
                     mean.append(mean_value)
