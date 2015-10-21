@@ -2,7 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_sectormean.ui'
 #
-# Created by: PyQt4 UI code generator 4.9.6
+# Created: Wed Oct 21 07:32:31 2015
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 

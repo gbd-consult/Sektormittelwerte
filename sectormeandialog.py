@@ -6,8 +6,8 @@
  Ermittlung sektorgemittelter Rasterwerte
                              -------------------
         begin                : 2013-08-09
-        copyright            : (C) 2013 by Otto Dassau
-        email                : dassau@gbd-consult.de
+        copyright            : (C) 2013 by Geoinformatikbüro Dassau GmbH
+        email                : info@gbd-consult.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -46,13 +46,6 @@ try:
 except ImportError:
     QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul shapely ist nicht installiert" ) )
 
-# Module fuers Umprojizieren
-try:
-	import pyproj
-except ImportError:
-	QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul pyproj ist nicht installiert" ) )
-
-
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self,  iface):
         # always put the plugin dialog on top 
@@ -86,10 +79,6 @@ class SectorMeanDialog(QtGui.QDialog):
 
         # Setze Fortschrittbalken auf 0
         self.ui.progressBar.setValue(0)
-
-        # KBS fuer das Umprojizieren definieren (Corine ist in 32632 abgelegt)
-        self.wgs84 = pyproj.Proj("+init=EPSG:4326")
-        self.utm32wgs84 = pyproj.Proj("+init=EPSG:32632")
 
     # (from value tool)
     def changeActive(self):
@@ -218,6 +207,11 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # Daten generieren und als CSV Tabelle rausschreiben
     def saveCSV(self):
+        # KBS fuer das Umprojizieren definieren (Corine ist in 32632 abgelegt)
+        # Zuvor verwendetes pyproj ist kaputt
+        srcCrs = QgsCoordinateReferenceSystem("EPSG:4326")
+        destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
+	tranformer = QgsCoordinateTransform(srcCrs, destCrs)
         # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
         csvProvider = csvLayer.dataProvider()
@@ -246,7 +240,9 @@ class SectorMeanDialog(QtGui.QDialog):
             nElement += 1
             self.ui.progressBar.setValue(nElement)
             # stlon und stlat von WGS84 nach UTM32N WGS84 transformieren
-            xutm32, yutm32 = pyproj.transform(self.wgs84, self.utm32wgs84, stlon, stlat)
+            tp = tranformer.transform(stlon, stlat)
+            xutm32 = tp.x()
+            yutm32 = tp.y()
             # Koordinate um Zonenzahl erweitern für die Ausgabe und auf nächste Ganzzahl runden
             pxutm32.append(math.trunc(xutm32) + 32000000)
             pyutm32.append(math.trunc(yutm32))
