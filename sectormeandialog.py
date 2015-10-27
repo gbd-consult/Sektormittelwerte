@@ -344,17 +344,17 @@ class SectorMeanDialog(QtGui.QDialog):
         self.standortname = self.ui.InPoint.currentText()
         self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")                
 
-# Ausgabe als CSV Datei mit einer Zeile für jede Station
-        header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0',  'isect1', 'isect2', 'isect3', 'isect4', 
-        'isect5', 'isect6', 'isect7', 'isect8',  'isect9', 'isect10', 'isect11', 'isect12']
-        with open(self.fileName, 'wb') as csvfile:
-            datawriter = csv.writer(csvfile)		
-            # schreibe Kopfzeile
-            datawriter.writerow(header)
-            # schreibe Daten
-            for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
-                cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1
-                datawriter.writerow(cols)
-                
-                
+        # Bei Klick auf Abbrechen den Dialog schliessen, sonst ...
+        if self.fileName != "":
+            # Ausgabe als CSV Datei mit einer Zeile für jede Station
+            header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm',  'isect0',  'isect1', 'isect2', 'isect3', 'isect4', 
+            'isect5', 'isect6', 'isect7', 'isect8',  'isect9', 'isect10', 'isect11', 'isect12']
+            with open(self.fileName, 'wb') as csvfile:
+                datawriter = csv.writer(csvfile)		
+                # schreibe Kopfzeile
+                datawriter.writerow(header)
+                # schreibe Daten
+                for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
+                    cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1
+                    datawriter.writerow(cols)
 
