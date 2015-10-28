@@ -70,7 +70,7 @@ class SectorMeanDialog(QtGui.QDialog):
         # connect speichern als CSV
         QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
 
-        # Lade Rasterlayer in die Combobox
+        # Lade Rasterlayer und Punktlayer in die Combobox
         self.initVectorLayerCombobox( self.ui.InPoint, 'key_of_default_layer' )
         self.initRasterLayerCombobox( self.ui.InRast, 'key_of_default_layer' )
 
@@ -135,7 +135,7 @@ class SectorMeanDialog(QtGui.QDialog):
             return
         if self.ui.InRast.currentIndex()  == -1:
             QMessageBox.warning( self, self.tr( "Warnung" ),
-                self.tr( "Bitte einen Rasterlayer auswählen" ) )
+                self.tr( "Bitte einen Rasterlayer selektieren" ) )
             return
 
     # Return QgsMapLayer.RasterLayer (only gdal) from a layer name ( as string )
@@ -185,8 +185,11 @@ class SectorMeanDialog(QtGui.QDialog):
         field_names = [field.name() for field in fields]
         default = [u'st', u'stlon', u'stlat', u'distm']
         if field_names != default:
-            QMessageBox.warning( self, self.tr( "Warnung" ),
-            self.tr( "Punktlayer hat falsche Spaltennamen" ) )
+            QMessageBox.warning( self, self.tr( "Information" ),
+            self.tr( "Die Standortdatei hat unerwartete Spaltennamen.\n"
+                     "Kontrollieren Sie bitte, ob der Punktlayer korrekt\n"
+                     "ist und brechen bei Bedarf den Speichervorgang ab." ),
+                      QMessageBox.Ok )
             return
                    
     # Rasterwert an Position
