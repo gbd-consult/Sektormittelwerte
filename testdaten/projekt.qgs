@@ -15,7 +15,7 @@
     <layer-tree-layer expanded="1" checked="Qt::Unchecked" id="mm_2012_test10020130819232028493" name="mm_2012_test100">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="0" checked="Qt::Unchecked" id="corine2006_z0_utm3220130816180602582" name="corine2006_z0_utm32">
+    <layer-tree-layer expanded="0" checked="Qt::Checked" id="corine2006_z0_utm3220130816180602582" name="corine2006_z0_utm32">
       <customproperties/>
     </layer-tree-layer>
   </layer-tree-group>
@@ -23,10 +23,10 @@
   <mapcanvas>
     <units>meters</units>
     <extent>
-      <xmin>-298744.01268057990819216</xmin>
-      <ymin>-172582.36581980314804241</ymin>
-      <xmax>298759.65156857995316386</xmax>
-      <ymax>172689.77859780314611271</ymax>
+      <xmin>261275</xmin>
+      <ymin>5203700</ymin>
+      <xmax>963725</xmax>
+      <ymax>6140300</ymax>
     </extent>
     <rotation>0</rotation>
     <projections>1</projections>
@@ -46,7 +46,7 @@
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_test120151027163424047"/>
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_fehlertest120151027162632246"/>
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_fehlertest120151027162917003"/>
-      <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_fehlertest120151027163843889"/>
+      <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_fehlertest120151027163843889"/>
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_test10020130819232028493"/>
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="corine2006_z0_utm3220130816180602582"/>
       <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_fehlertest120151027163339846"/>
@@ -85,9 +85,9 @@
         <legendlayerfile isInOverview="0" layerid="mm_2012_test10020130819232028493" visible="0"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="corine2006_z0_utm32" showFeatureCount="0">
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="corine2006_z0_utm32" showFeatureCount="0">
       <filegroup open="false" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm3220130816180602582" visible="0"/>
+        <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm3220130816180602582" visible="1"/>
       </filegroup>
     </legendlayer>
   </legend>
@@ -181,7 +181,7 @@
       </pipe>
       <blendMode>0</blendMode>
     </maplayer>
-    <maplayer minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+    <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <id>mm_2012_fehlertest120151027163843889</id>
       <datasource>file:./mm_2012_fehlertest1.dat?type=csv&amp;xField=lon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
       <title></title>
@@ -192,14 +192,14 @@
       <layername>mm_2012_fehlertest1</layername>
       <srs>
         <spatialrefsys>
-          <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
-          <srsid>3116</srsid>
-          <srid>32632</srid>
-          <authid>EPSG:32632</authid>
-          <description>WGS 84 / UTM zone 32N</description>
-          <projectionacronym>utm</projectionacronym>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
           <ellipsoidacronym>WGS84</ellipsoidacronym>
-          <geographicflag>false</geographicflag>
+          <geographicflag>true</geographicflag>
         </spatialrefsys>
       </srs>
       <provider encoding="System">delimitedtext</provider>
@@ -260,7 +260,10 @@
                 <effect type="outerGlow">
                   <prop k="blend_mode" v="0"/>
                   <prop k="blur_level" v="3"/>
+                  <prop k="color1" v="0,0,255,255"/>
+                  <prop k="color2" v="0,255,0,255"/>
                   <prop k="color_type" v="0"/>
+                  <prop k="discrete" v="0"/>
                   <prop k="draw_mode" v="2"/>
                   <prop k="enabled" v="0"/>
                   <prop k="single_color" v="255,255,255,255"/>
@@ -290,7 +293,10 @@
                 <effect type="innerGlow">
                   <prop k="blend_mode" v="0"/>
                   <prop k="blur_level" v="3"/>
+                  <prop k="color1" v="0,0,255,255"/>
+                  <prop k="color2" v="0,255,0,255"/>
                   <prop k="color_type" v="0"/>
+                  <prop k="discrete" v="0"/>
                   <prop k="draw_mode" v="2"/>
                   <prop k="enabled" v="0"/>
                   <prop k="single_color" v="255,255,255,255"/>
@@ -321,7 +327,10 @@
           <effect type="outerGlow">
             <prop k="blend_mode" v="0"/>
             <prop k="blur_level" v="3"/>
+            <prop k="color1" v="0,0,255,255"/>
+            <prop k="color2" v="0,255,0,255"/>
             <prop k="color_type" v="0"/>
+            <prop k="discrete" v="0"/>
             <prop k="draw_mode" v="2"/>
             <prop k="enabled" v="0"/>
             <prop k="single_color" v="255,255,255,255"/>
@@ -351,7 +360,10 @@
           <effect type="innerGlow">
             <prop k="blend_mode" v="0"/>
             <prop k="blur_level" v="3"/>
+            <prop k="color1" v="0,0,255,255"/>
+            <prop k="color2" v="0,255,0,255"/>
             <prop k="color_type" v="0"/>
+            <prop k="discrete" v="0"/>
             <prop k="draw_mode" v="2"/>
             <prop k="enabled" v="0"/>
             <prop k="single_color" v="255,255,255,255"/>
@@ -362,7 +374,149 @@
           </effect>
         </effect>
       </renderer-v2>
-      <customproperties/>
+      <customproperties>
+        <property key="labeling" value="pal"/>
+        <property key="labeling/addDirectionSymbol" value="false"/>
+        <property key="labeling/angleOffset" value="0"/>
+        <property key="labeling/blendMode" value="0"/>
+        <property key="labeling/bufferBlendMode" value="0"/>
+        <property key="labeling/bufferColorA" value="255"/>
+        <property key="labeling/bufferColorB" value="255"/>
+        <property key="labeling/bufferColorG" value="255"/>
+        <property key="labeling/bufferColorR" value="255"/>
+        <property key="labeling/bufferDraw" value="false"/>
+        <property key="labeling/bufferJoinStyle" value="64"/>
+        <property key="labeling/bufferNoFill" value="false"/>
+        <property key="labeling/bufferSize" value="1"/>
+        <property key="labeling/bufferSizeInMapUnits" value="false"/>
+        <property key="labeling/bufferSizeMapUnitMaxScale" value="0"/>
+        <property key="labeling/bufferSizeMapUnitMinScale" value="0"/>
+        <property key="labeling/bufferTransp" value="0"/>
+        <property key="labeling/centroidInside" value="false"/>
+        <property key="labeling/centroidWhole" value="false"/>
+        <property key="labeling/decimals" value="3"/>
+        <property key="labeling/displayAll" value="false"/>
+        <property key="labeling/dist" value="0"/>
+        <property key="labeling/distInMapUnits" value="false"/>
+        <property key="labeling/distMapUnitMaxScale" value="0"/>
+        <property key="labeling/distMapUnitMinScale" value="0"/>
+        <property key="labeling/enabled" value="false"/>
+        <property key="labeling/fieldName" value=""/>
+        <property key="labeling/fontBold" value="false"/>
+        <property key="labeling/fontCapitals" value="0"/>
+        <property key="labeling/fontFamily" value="Ubuntu"/>
+        <property key="labeling/fontItalic" value="false"/>
+        <property key="labeling/fontLetterSpacing" value="0"/>
+        <property key="labeling/fontLimitPixelSize" value="false"/>
+        <property key="labeling/fontMaxPixelSize" value="10000"/>
+        <property key="labeling/fontMinPixelSize" value="3"/>
+        <property key="labeling/fontSize" value="9"/>
+        <property key="labeling/fontSizeInMapUnits" value="false"/>
+        <property key="labeling/fontSizeMapUnitMaxScale" value="0"/>
+        <property key="labeling/fontSizeMapUnitMinScale" value="0"/>
+        <property key="labeling/fontStrikeout" value="false"/>
+        <property key="labeling/fontUnderline" value="false"/>
+        <property key="labeling/fontWeight" value="50"/>
+        <property key="labeling/fontWordSpacing" value="0"/>
+        <property key="labeling/formatNumbers" value="false"/>
+        <property key="labeling/isExpression" value="true"/>
+        <property key="labeling/labelOffsetInMapUnits" value="true"/>
+        <property key="labeling/labelOffsetMapUnitMaxScale" value="0"/>
+        <property key="labeling/labelOffsetMapUnitMinScale" value="0"/>
+        <property key="labeling/labelPerPart" value="false"/>
+        <property key="labeling/leftDirectionSymbol" value="&lt;"/>
+        <property key="labeling/limitNumLabels" value="false"/>
+        <property key="labeling/maxCurvedCharAngleIn" value="20"/>
+        <property key="labeling/maxCurvedCharAngleOut" value="-20"/>
+        <property key="labeling/maxNumLabels" value="2000"/>
+        <property key="labeling/mergeLines" value="false"/>
+        <property key="labeling/minFeatureSize" value="0"/>
+        <property key="labeling/multilineAlign" value="0"/>
+        <property key="labeling/multilineHeight" value="1"/>
+        <property key="labeling/namedStyle" value="Medium"/>
+        <property key="labeling/obstacle" value="true"/>
+        <property key="labeling/placeDirectionSymbol" value="0"/>
+        <property key="labeling/placement" value="0"/>
+        <property key="labeling/placementFlags" value="0"/>
+        <property key="labeling/plussign" value="false"/>
+        <property key="labeling/preserveRotation" value="true"/>
+        <property key="labeling/previewBkgrdColor" value="#ffffff"/>
+        <property key="labeling/priority" value="5"/>
+        <property key="labeling/quadOffset" value="4"/>
+        <property key="labeling/repeatDistance" value="0"/>
+        <property key="labeling/repeatDistanceMapUnitMaxScale" value="0"/>
+        <property key="labeling/repeatDistanceMapUnitMinScale" value="0"/>
+        <property key="labeling/repeatDistanceUnit" value="1"/>
+        <property key="labeling/reverseDirectionSymbol" value="false"/>
+        <property key="labeling/rightDirectionSymbol" value=">"/>
+        <property key="labeling/scaleMax" value="10000000"/>
+        <property key="labeling/scaleMin" value="1"/>
+        <property key="labeling/scaleVisibility" value="false"/>
+        <property key="labeling/shadowBlendMode" value="6"/>
+        <property key="labeling/shadowColorB" value="0"/>
+        <property key="labeling/shadowColorG" value="0"/>
+        <property key="labeling/shadowColorR" value="0"/>
+        <property key="labeling/shadowDraw" value="false"/>
+        <property key="labeling/shadowOffsetAngle" value="135"/>
+        <property key="labeling/shadowOffsetDist" value="1"/>
+        <property key="labeling/shadowOffsetGlobal" value="true"/>
+        <property key="labeling/shadowOffsetMapUnitMaxScale" value="0"/>
+        <property key="labeling/shadowOffsetMapUnitMinScale" value="0"/>
+        <property key="labeling/shadowOffsetUnits" value="1"/>
+        <property key="labeling/shadowRadius" value="1.5"/>
+        <property key="labeling/shadowRadiusAlphaOnly" value="false"/>
+        <property key="labeling/shadowRadiusMapUnitMaxScale" value="0"/>
+        <property key="labeling/shadowRadiusMapUnitMinScale" value="0"/>
+        <property key="labeling/shadowRadiusUnits" value="1"/>
+        <property key="labeling/shadowScale" value="100"/>
+        <property key="labeling/shadowTransparency" value="30"/>
+        <property key="labeling/shadowUnder" value="0"/>
+        <property key="labeling/shapeBlendMode" value="0"/>
+        <property key="labeling/shapeBorderColorA" value="255"/>
+        <property key="labeling/shapeBorderColorB" value="128"/>
+        <property key="labeling/shapeBorderColorG" value="128"/>
+        <property key="labeling/shapeBorderColorR" value="128"/>
+        <property key="labeling/shapeBorderWidth" value="0"/>
+        <property key="labeling/shapeBorderWidthMapUnitMaxScale" value="0"/>
+        <property key="labeling/shapeBorderWidthMapUnitMinScale" value="0"/>
+        <property key="labeling/shapeBorderWidthUnits" value="1"/>
+        <property key="labeling/shapeDraw" value="false"/>
+        <property key="labeling/shapeFillColorA" value="255"/>
+        <property key="labeling/shapeFillColorB" value="255"/>
+        <property key="labeling/shapeFillColorG" value="255"/>
+        <property key="labeling/shapeFillColorR" value="255"/>
+        <property key="labeling/shapeJoinStyle" value="64"/>
+        <property key="labeling/shapeOffsetMapUnitMaxScale" value="0"/>
+        <property key="labeling/shapeOffsetMapUnitMinScale" value="0"/>
+        <property key="labeling/shapeOffsetUnits" value="1"/>
+        <property key="labeling/shapeOffsetX" value="0"/>
+        <property key="labeling/shapeOffsetY" value="0"/>
+        <property key="labeling/shapeRadiiMapUnitMaxScale" value="0"/>
+        <property key="labeling/shapeRadiiMapUnitMinScale" value="0"/>
+        <property key="labeling/shapeRadiiUnits" value="1"/>
+        <property key="labeling/shapeRadiiX" value="0"/>
+        <property key="labeling/shapeRadiiY" value="0"/>
+        <property key="labeling/shapeRotation" value="0"/>
+        <property key="labeling/shapeRotationType" value="0"/>
+        <property key="labeling/shapeSVGFile" value=""/>
+        <property key="labeling/shapeSizeMapUnitMaxScale" value="0"/>
+        <property key="labeling/shapeSizeMapUnitMinScale" value="0"/>
+        <property key="labeling/shapeSizeType" value="0"/>
+        <property key="labeling/shapeSizeUnits" value="1"/>
+        <property key="labeling/shapeSizeX" value="0"/>
+        <property key="labeling/shapeSizeY" value="0"/>
+        <property key="labeling/shapeTransparency" value="0"/>
+        <property key="labeling/shapeType" value="0"/>
+        <property key="labeling/textColorA" value="255"/>
+        <property key="labeling/textColorB" value="0"/>
+        <property key="labeling/textColorG" value="0"/>
+        <property key="labeling/textColorR" value="0"/>
+        <property key="labeling/textTransp" value="0"/>
+        <property key="labeling/upsidedownLabels" value="0"/>
+        <property key="labeling/wrapChar" value=""/>
+        <property key="labeling/xOffset" value="0"/>
+        <property key="labeling/yOffset" value="0"/>
+      </customproperties>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
       <layerTransparency>0</layerTransparency>
@@ -388,10 +542,16 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
-      <editform></editform>
+      <SingleCategoryDiagramRenderer diagramType="Pie">
+        <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" sizeType="MM" minScaleDenominator="-4.65661e-10">
+          <fontProperties description="Ubuntu,9,-1,5,50,0,0,0,0,0" style=""/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings yPosColumn="-1" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" showAll="1"/>
+      <editform>.</editform>
       <editforminit/>
       <featformsuppress>0</featformsuppress>
-      <annotationform></annotationform>
+      <annotationform>.</annotationform>
       <editorlayout>generatedlayout</editorlayout>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
