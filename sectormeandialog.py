@@ -22,6 +22,7 @@
 
 # Hilfe: Benutzung zur Ausgabe von Variablen in einem Info-Fenster
 # QMessageBox.information(None, "Info:", <variable>)
+# self.iface.messageBar().pushMessage("Error", "I'm sorry Dave, I'm afraid I can't do that", level=QgsMessageBar.CRITICAL)
 
 import logging
 # aendere den Level zurück auf logging.WARNING(default) vor dem Release
@@ -185,11 +186,7 @@ class SectorMeanDialog(QtGui.QDialog):
         field_names = [field.name() for field in fields]
         default = [u'st', u'stlon', u'stlat', u'distm']
         if field_names != default:
-            QMessageBox.warning( self, self.tr( "Information" ),
-            self.tr( "Die Standortdatei hat unerwartete Spaltennamen.\n"
-                     "Kontrollieren Sie bitte, ob der Punktlayer korrekt\n"
-                     "ist und brechen bei Bedarf den Speichervorgang ab." ),
-                      QMessageBox.Ok )
+            self.iface.messageBar().pushMessage("Warnung", "Die Standortdatei hat falsche Spaltennamen, bitte kontollieren.", QgsMessageBar.WARNING, 5)
             return
                    
     # Rasterwert an Position
