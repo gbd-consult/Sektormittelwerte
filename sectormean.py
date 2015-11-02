@@ -6,7 +6,7 @@
  Ermittlung sektorgemittelter Rasterwerte
                               -------------------
         begin                : 2013-08-09
-        copyright            : (C) 2013 by Otto Dassau
+        copyright            : (C) 2013 by Geoinformatikbuero Dassau GmbH
         email                : dassau@gbd-consult.de
  ***************************************************************************/
 

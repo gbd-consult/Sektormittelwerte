@@ -12,8 +12,8 @@
 name=Sektormittelwerte
 qgisMinimumVersion=2.0
 description=Ermittlung sektorgemittelter Rasterwerte
-version=0.1
-author=Otto Dassau
+version=0.2
+author=Geoinformatikbuero Dassau GmbH
 email=dassau@gbd-consult.de
 
 # end of mandatory metadata

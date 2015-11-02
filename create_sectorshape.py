@@ -7,7 +7,7 @@
 # PURPOSE:	Create sector layer as shape file. Based on an idea by 
 #		chriserik		
 #
-# COPYRIGHT:    (c) 2013 Otto Dassau - Geoinformatik Buero Dassau
+# COPYRIGHT:    (c) 2013 Otto Dassau - Geoinformatikbuero Dassau GmbH
 #               This program is free software under the GNU General Public
 #               License (>=v2) for details.
 #
