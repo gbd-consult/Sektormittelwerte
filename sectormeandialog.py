@@ -42,10 +42,12 @@ from qgis.analysis import QgsZonalStatistics
 # Module fuer den Sektorkreis
 import math
 import csv
+
 try:
     from shapely.geometry import Point, Polygon
 except ImportError:
-    QMessageBox.warning( self, self.tr( "Sektormittelwert: Fehler" ), self.tr( "Python Modul shapely ist nicht installiert" ) )
+    raise ImportError('Python Modul shapely ist nicht installiert.')
+
 
 class SectorMeanDialog(QtGui.QDialog):
     def __init__(self,  iface):
@@ -54,6 +56,7 @@ class SectorMeanDialog(QtGui.QDialog):
         # Set up the user interface from Designer.
         self.ui = Ui_SectorMean()
         self.ui.setupUi(self)
+        self.messagebar = QgsMessageBar()
         
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
