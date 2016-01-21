@@ -62,6 +62,8 @@ class SectorMeanDialog(QtGui.QDialog):
 
         # connect start/stop interaktive display
         QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
+        # connect currentIndexChanged signal of layer selection with checkVectorLayer
+        self.ui.InPoint.currentIndexChanged.connect(self.checkVectorLayer)
 
         # always start in not activated mode
         self.ui.cbxActive.setCheckState(Qt.Unchecked)
@@ -211,13 +213,13 @@ class SectorMeanDialog(QtGui.QDialog):
             mean_value = feature.attributes()[2]
             return mean_value
 
-    # Daten generieren und als CSV Tabelle rausschreiben
+    # generate data as csv table
     def saveCSV(self):
         # KBS fuer das Umprojizieren definieren (Corine ist in EPSG:32632 abgelegt)
         srcCrs = QgsCoordinateReferenceSystem("EPSG:4326")
         destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
         transformer = QgsCoordinateTransform(srcCrs, destCrs)
-        # Testen ob Feldnamen richtig sind
+        # test if fieldnames ar correct
         self.checkVectorLayer()
         # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
