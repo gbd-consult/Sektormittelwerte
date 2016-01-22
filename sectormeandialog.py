@@ -180,12 +180,13 @@ class SectorMeanDialog(QtGui.QDialog):
 
     def checkVectorLayer( self ):
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
-        fields = csvLayer.pendingFields()
-        field_names = [field.name() for field in fields]
-        default = [u'st', u'stlon', u'stlat', u'distm']
-        if field_names != default:
-            self.iface.messageBar().pushMessage("Error", "Standortdatei hat falsche Spaltennamen.", QgsMessageBar.CRITICAL, 5)
-            return
+	if csvLayer:
+            fields = csvLayer.pendingFields()
+            field_names = [field.name() for field in fields]
+            default = [u'st', u'stlon', u'stlat', u'distm']
+            if field_names != default:
+                self.iface.messageBar().pushMessage("Error", "Standortdatei hat falsche Spaltennamen.", QgsMessageBar.CRITICAL, 5)
+                return
 
     # Rasterwert an Position
     def sampleRaster20(self, layer, x, y):
@@ -220,7 +221,7 @@ class SectorMeanDialog(QtGui.QDialog):
         destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
         transformer = QgsCoordinateTransform(srcCrs, destCrs)
         # test if fieldnames ar correct
-        self.checkVectorLayer()
+        # self.checkVectorLayer()
         # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
         csvProvider = csvLayer.dataProvider()
