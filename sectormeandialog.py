@@ -53,6 +53,8 @@ class SectorMeanDialog(QtGui.QDialog):
         self.ui.setupUi(self)
         self.messagebar = QgsMessageBar()
 
+        self.check_vector = True
+
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
 
@@ -119,14 +121,18 @@ class SectorMeanDialog(QtGui.QDialog):
             self.ui.outputMean.setText("kein Wert")
 
     def add_layer(self, layerid):
+        self.check_vector = False
         self.initVectorLayerCombobox( self.ui.InPoint, self.ui.InPoint.currentText() )
         self.initRasterLayerCombobox( self.ui.InRast, self.ui.InRast.currentText() )
+        self.check_vector = True
 
     # FIXME: Das Löschen von Layern wird nicht richtig übernommen
     def remove_layer(self, layerid):
+        self.check_vector = False
         layer = QgsMapLayerRegistry.instance().mapLayer(layerid)
         self.ui.InPoint.removeItem( self.ui.InPoint.findData( layer.name() ) )
         self.ui.InRast.removeItem( self.ui.InRast.findData( layer.name() ) )
+        self.check_vector = True
 
     def accept(self):
         # check input parameters
@@ -179,6 +185,8 @@ class SectorMeanDialog(QtGui.QDialog):
                     return None
 
     def checkVectorLayer( self ):
+        if self.check_vector is False:
+            return
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
 	if csvLayer:
             fields = csvLayer.pendingFields()
