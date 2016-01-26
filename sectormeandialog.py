@@ -60,7 +60,7 @@ class SectorMeanDialog(QtGui.QDialog):
 
         # connect layer list in plugin combobox
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
-        QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWillBeRemoved(QString)"), self.remove_layer)
+        QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerRemoved(QString)"), self.remove_layer)
 
         # connect start/stop interaktive display
         QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
@@ -126,13 +126,15 @@ class SectorMeanDialog(QtGui.QDialog):
         self.initRasterLayerCombobox( self.ui.InRast, self.ui.InRast.currentText() )
         self.check_vector = True
 
-    # FIXME: Das Löschen von Layern wird nicht richtig übernommen
     def remove_layer(self, layerid):
         self.check_vector = False
-        layer = QgsMapLayerRegistry.instance().mapLayer(layerid)
-        self.ui.InPoint.removeItem( self.ui.InPoint.findData( layer.name() ) )
-        self.ui.InRast.removeItem( self.ui.InRast.findData( layer.name() ) )
+        self.ui.InRast.clear()
+        self.ui.InPoint.clear()
         self.check_vector = True
+        # Add the remaining layers
+        layers = QgsMapLayerRegistry.instance().mapLayers()
+        for layer in layers:
+            self.add_layer(layers[layer])
 
     def accept(self):
         # check input parameters
@@ -185,8 +187,12 @@ class SectorMeanDialog(QtGui.QDialog):
                     return None
 
     def checkVectorLayer( self ):
+        """
+        Check if the vector layer has correct layout
+        :return: False if the vector layer is incorrect 
+        """
         if self.check_vector is False:
-            return
+            return True
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
 	if csvLayer:
             fields = csvLayer.pendingFields()
@@ -194,7 +200,8 @@ class SectorMeanDialog(QtGui.QDialog):
             default = [u'st', u'stlon', u'stlat', u'distm']
             if field_names != default:
                 self.iface.messageBar().pushMessage("Error", "Standortdatei hat falsche Spaltennamen.", QgsMessageBar.CRITICAL, 5)
-                return
+                return False
+        return True
 
     # Rasterwert an Position
     def sampleRaster20(self, layer, x, y):
@@ -224,6 +231,12 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # generate data as csv table
     def saveCSV(self):
+        """
+        Save the result in a CSV file
+        """
+        if self.checkVectorLayer() is False:
+            return
+
         # KBS fuer das Umprojizieren definieren (Corine ist in EPSG:32632 abgelegt)
         srcCrs = QgsCoordinateReferenceSystem("EPSG:4326")
         destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
@@ -232,6 +245,8 @@ class SectorMeanDialog(QtGui.QDialog):
         # self.checkVectorLayer()
         # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
+
+
         csvProvider = csvLayer.dataProvider()
         csvFeature = QgsFeature()
         csvAllAttrs = csvProvider.attributeIndexes()
