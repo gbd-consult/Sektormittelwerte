@@ -64,6 +64,7 @@ class SectorMeanDialog(QtGui.QDialog):
 
         # connect start/stop interaktive display
         QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
+
         # connect currentIndexChanged signal of layer selection with checkVectorLayer
         self.ui.InPoint.currentIndexChanged.connect(self.checkVectorLayer)
 
@@ -241,12 +242,7 @@ class SectorMeanDialog(QtGui.QDialog):
         srcCrs = QgsCoordinateReferenceSystem("EPSG:4326")
         destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
         transformer = QgsCoordinateTransform(srcCrs, destCrs)
-        # test if fieldnames ar correct
-        # self.checkVectorLayer()
-        # CSV Layer auslesen
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
-
-
         csvProvider = csvLayer.dataProvider()
         csvFeature = QgsFeature()
         csvAllAttrs = csvProvider.attributeIndexes()
