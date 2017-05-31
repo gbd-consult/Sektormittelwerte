@@ -43,7 +43,7 @@ HELP = help/build/html
 
 default: compile
 
-compile: $(UI_FILES) $(RESOURCE_FILES)
+compile: $(RESOURCE_FILES)
 
 %_rc.py : %.qrc
 	pyrcc4 -o $*_rc.py  $<
@@ -110,7 +110,7 @@ transclean:
 	rm -f i18n/*.qm
 
 clean:
-	rm $(UI_FILES) $(RESOURCE_FILES)
+	rm $(RESOURCE_FILES)
 
 # build documentation with sphinx
 doc: 
