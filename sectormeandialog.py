@@ -57,19 +57,22 @@ class SectorMeanDialog(QtGui.QDialog):
 
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
+        self.zoneStatTool = QgsMapToolEmitPoint(self.canvas)
 
         # connect layer list in plugin combobox
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
         QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerRemoved(QString)"), self.remove_layer)
 
         # connect start/stop interaktive display
-        QObject.connect(self.ui.cbxActive,SIGNAL("stateChanged(int)"),self.changeActive)
+        self.ui.toolButton.setCheckable(True)
+        #QObject.connect(self.ui.toolButton,SIGNAL("triggered()"),self.changeActive)
+        self.ui.toolButton.clicked.connect(self.changeActive)
 
         # connect currentIndexChanged signal of layer selection with checkVectorLayer
         self.ui.InPoint.currentIndexChanged.connect(self.checkVectorLayer)
 
         # always start in not activated mode
-        self.ui.cbxActive.setCheckState(Qt.Unchecked)
+        self.ui.toolButton.setChecked(False)
 
         # connect speichern als CSV
         QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
@@ -86,14 +89,14 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # (from value tool)
     def changeActive(self):
-        if self.ui.cbxActive.isChecked():
-            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinates)
-            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
-            QObject.connect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)
+        print "debug"
+        if self.ui.toolButton.isChecked():
+            self.canvas.setMapTool(self.zoneStatTool)
+            self.zoneStatTool.canvasClicked.connect(self.listen_xCoordinates)
+            self.zoneStatTool.canvasClicked.connect(self.listen_yCoordinates)
+            self.zoneStatTool.canvasClicked.connect(self.listen_z0)
         else:
-            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xCoordinate)
-            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_yCoordinates)
-            QObject.disconnect(self.canvas, SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_z0)
+            self.canvas.unsetMapTool(self.zoneStatTool)
 
     # Anzeige der Werte an und aussetellen
     def changePlot(self):
@@ -115,7 +118,8 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # Gebe Mittelwert der Rauhigkeit an Mousepositon aus und überschreibe vorherige (append ergänzt)
     def listen_z0(self, point):
-        if self.meanBuffer() is not None:
+    #if self.meanBuffer() is not None:
+        if self.meanBuffer():
             mean = float(self.meanBuffer())
             self.ui.outputMean.setText("%.2f" % (mean))
         else:
@@ -217,6 +221,7 @@ class SectorMeanDialog(QtGui.QDialog):
     # Berechne Mittelwert interaktiv fuer Gesamtkreis an Mouseposition
     def meanBuffer(self):
         # leeren Memorylayer mit KBS WGS84 erzeugen für den Puffer z0 um die Mousepoition
+        print QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory").featureCount()
         vpoly = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
         feature = QgsFeature()
         feature.setGeometry(QgsGeometry.fromPoint(QgsPoint(self.xCoord, self.yCoord)).buffer(self.ui.bufferz0.value(),5))
