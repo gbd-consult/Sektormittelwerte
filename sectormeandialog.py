@@ -272,7 +272,7 @@ class SectorMeanDialog(QtGui.QDialog):
             pisectx.append(mean_sector)
 
             # values for weighted means
-            phisect.append([float(x) for x in feature.attributes()[4::]])
+            phisect.append([float(x) for x in feature.attributes()[4::] if x])
                 
 
         # Setze Fortschrittbalken wieder auf 0
