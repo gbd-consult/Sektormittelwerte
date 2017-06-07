@@ -49,19 +49,17 @@ class SectorMeanDialog(QtGui.QDialog):
 
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
+        self.layerRegistry = QgsMapLayerRegistry.instance()
+        print self.layerRegistry
         self.zoneStatTool = QgsMapToolEmitPoint(self.canvas)
-
-        # connect layer list in plugin combobox
-        QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
-        QObject.connect(QgsMapLayerRegistry.instance(), SIGNAL("layerRemoved(QString)"), self.remove_layer)
 
         # connect start/stop interaktive display
         self.ui.toolButton.setCheckable(True)
-        #QObject.connect(self.ui.toolButton,SIGNAL("triggered()"),self.changeActive)
         self.ui.toolButton.clicked.connect(self.changeActive)
 
-        # connect currentIndexChanged signal of layer selection with checkVectorLayer
-        self.ui.InPoint.currentIndexChanged.connect(self.checkVectorLayer)
+        # connect layer list in plugin combobox
+        QObject.connect(self.layerRegistry, SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
+        QObject.connect(self.layerRegistry, SIGNAL("layerRemoved(QString)"), self.remove_layer)
 
         # always start in not activated mode
         self.ui.toolButton.setChecked(False)
@@ -129,7 +127,7 @@ class SectorMeanDialog(QtGui.QDialog):
         self.ui.InPoint.clear()
         self.check_vector = True
         # Add the remaining layers
-        layers = QgsMapLayerRegistry.instance().mapLayers()
+        layers = self.layerRegistry.mapLayers()
         for layer in layers:
             self.add_layer(layers[layer])
 
@@ -147,7 +145,7 @@ class SectorMeanDialog(QtGui.QDialog):
     # Return QgsMapLayer.RasterLayer (only gdal) from a layer name ( as string )
     def initRasterLayerCombobox(self, combobox, layerid):
         combobox.clear()
-        reg = QgsMapLayerRegistry.instance()
+        reg = self.layerRegistry
         for ( key, layer ) in reg.mapLayers().iteritems():
             if layer.type() == QgsMapLayer.RasterLayer: combobox.addItem( layer.name(), key )
         idx = combobox.findData( layerid )
@@ -156,7 +154,7 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # Hole Liste geladener Rasterlayer
     def getRasterLayerByName( self,  myName ):
-        layerMap = QgsMapLayerRegistry.instance().mapLayers()
+        layerMap = self.layerRegistry.mapLayers()
         for name, layer in layerMap.iteritems():
             if layer.type() == QgsMapLayer.RasterLayer and layer.name() == myName:
                 if layer.isValid():
@@ -167,7 +165,7 @@ class SectorMeanDialog(QtGui.QDialog):
     # Return QgsMapLayer.VectorLayer from a layer name ( as string )
     def initVectorLayerCombobox(self, combobox, default):
         combobox.clear()
-        reg = QgsMapLayerRegistry.instance()
+        reg = self.layerRegistry
         for ( key, layer ) in reg.mapLayers().iteritems():
             if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point: combobox.addItem( layer.name(), key )
         idx = combobox.findData( default )
@@ -175,7 +173,7 @@ class SectorMeanDialog(QtGui.QDialog):
             combobox.setCurrentIndex( idx )
 
     def getVectorLayerByName( self,  myName ):
-        layermap = QgsMapLayerRegistry.instance().mapLayers()
+        layermap = self.layerRegistry.mapLayers()
         for name, layer in layermap.iteritems():
             if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point and layer.name() == myName:
                 if layer.isValid():
@@ -195,8 +193,8 @@ class SectorMeanDialog(QtGui.QDialog):
             fields = csvLayer.pendingFields()
             field_names = [field.name() for field in fields]
             default = [u'st', u'stlon', u'stlat', u'distm']
-            default_hisect = default + [u'hisect' + str(x) for x in range(1,13)]
-            if field_names != default and field_names != default_hisect:
+            # Check if first field_names match with expected fieldnames
+            if len(filter(lambda (a,b): a == b, zip(field_names,default))) != len(default):
                 self.iface.messageBar().pushMessage("Error", "Standortdatei hat falsche Spaltennamen.", QgsMessageBar.CRITICAL, 5)
                 return False
         return True
