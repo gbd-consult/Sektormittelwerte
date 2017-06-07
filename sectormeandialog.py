@@ -32,11 +32,8 @@ from ui_sectormean import Ui_SectorMean
 from qgis.core import *
 from qgis.gui import *
 
-# for calculating mean values
-from qgis.analysis import QgsZonalStatistics
-
 # modules to create sector circle
-import math, csv, operator
+import math, csv
 import sector
 
 class SectorMeanDialog(QtGui.QDialog):
@@ -290,8 +287,9 @@ class SectorMeanDialog(QtGui.QDialog):
         if self.fileName != "":
             with open(self.fileName, 'wb') as csvfile:
                 datawriter = csv.writer(csvfile)
+                round_ = lambda x: round(x,2) # round to 2 decimal digits
                 # Check if we have the correct number of hisect values for weighted output
-                if reduce(operator.and_, [len(a) == sectors for a in phisect], True):
+                if reduce(lambda a, b: a & b, [len(a) == sectors for a in phisect], True):
                     header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm'] \
                     + ['isect' + str(x) for x in range(13)] \
                     + ['hisect' + str(x) for x in range(1,13)] \
@@ -301,7 +299,8 @@ class SectorMeanDialog(QtGui.QDialog):
                     datawriter.writerow(header)
                     for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1, lst2 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx, phisect):
                         wisect = [round(x * y,2) for (x,y) in zip(lst1, lst2)]
-                        cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1 + lst2 + wisect + [sum(wisect)]
+                        cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] \
+                        + map(round_, lst1) + map(round_, lst2) + wisect + [sum(wisect)]
                         datawriter.writerow(cols)
                 else: # non weighted output
                     header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm'] \
@@ -309,6 +308,5 @@ class SectorMeanDialog(QtGui.QDialog):
                     # write table header
                     datawriter.writerow(header)
                     for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
-                        cols = [int1, fp1, fp2, fp3, fp4, int2, fp5] + lst1
+                        cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] + map(round_, lst1)
                         datawriter.writerow(cols)
-
