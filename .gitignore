@@ -1,1 +1,7 @@
 *.pyc
+
+.eric4project
+*.e4p
+
+*.zip
+*.swp
