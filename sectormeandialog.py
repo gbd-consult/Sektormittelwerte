@@ -281,7 +281,7 @@ class SectorMeanDialog(QtGui.QDialog):
         self.ui.progressBar.setValue(0)
 
         self.standortname = self.ui.InPoint.currentText()
-        self.fileName = QFileDialog.getSaveFileName(self.iface.mainWindow(), "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")
+        self.fileName = QFileDialog.getSaveFileName(self.ui, "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")
 
         # Quit if no output was selected
         if self.fileName != "":
