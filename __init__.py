@@ -18,6 +18,7 @@
  ***************************************************************************/
 """
 
+
 def name():
     return "Sektormittelwerte"
 
@@ -38,10 +39,10 @@ def qgisMinimumVersion():
     return "2.0"
 
 def author():
-    return "Otto Dassau"
+    return "Geoinformatikbüro Dassau GmbH"
 
 def email():
-    return "dassau@gbd-consult.de"
+    return "info@gbd-consult.de"
 
 def classFactory(iface):
     # load SectorMean class from file SectorMean
