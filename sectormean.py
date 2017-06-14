@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- Sektormittelwerte
-                                 A QGIS plugin
- Ermittlung sektorgemittelter Rasterwerte
-                              -------------------
+ QGIS Plugin zur Ermittlung sektorgemittelter Rasterwerte
+ -------------------
         begin                : 2013-08-09
-        copyright            : (C) 2013 by Geoinformatikbuero Dassau GmbH
-        email                : dassau@gbd-consult.de
+        copyright            : (C) 2013 by Geoinformatikbüro Dassau GmbH
+        email                : info@gbd-consult.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -19,6 +17,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *

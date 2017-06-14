@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- SectorMeanDialog
- A QGIS plugin
- Ermittlung sektorgemittelter Rasterwerte
+ QGIS Plugin zur Ermittlung sektorgemittelter Rasterwerte
  -------------------
         begin                : 2013-08-09
         copyright            : (C) 2013 by Geoinformatikbüro Dassau GmbH
