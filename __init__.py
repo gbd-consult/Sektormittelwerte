@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- SectorMean
-                                 A QGIS plugin
- Ermittlung sektorgemittelter Rasterwerte
-                             -------------------
+ QGIS Plugin zur Ermittlung sektorgemittelter Rasterwerte
+ -------------------
         begin                : 2013-08-09
-        copyright            : (C) 2013 by Geoinformatikbuero Dassau GmbH
-        email                : dassau@gbd-consult.de
+        copyright            : (C) 2013 by Geoinformatikbüro Dassau GmbH
+        email                : info@gbd-consult.de
  ***************************************************************************/
 
 /***************************************************************************
@@ -18,9 +16,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- This script initializes the plugin, making it known to QGIS.
 """
-
 
 def name():
     return "Sektormittelwerte"
