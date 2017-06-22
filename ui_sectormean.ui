@@ -164,9 +164,9 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
-           <widget class="QToolButton" name="toolButton">
+           <widget class="QCheckBox" name="checkBox">
             <property name="text">
-             <string>...</string>
+             <string>Start/Stop</string>
             </property>
            </widget>
           </item>

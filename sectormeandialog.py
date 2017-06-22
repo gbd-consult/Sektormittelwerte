@@ -52,15 +52,13 @@ class SectorMeanDialog(QtGui.QDialog):
         self.zoneStatTool = QgsMapToolEmitPoint(self.canvas)
 
         # connect start/stop interaktive display
-        self.ui.toolButton.setCheckable(True)
-        self.ui.toolButton.clicked.connect(self.changeActive)
+        QObject.connect(self.ui.checkBox,SIGNAL("stateChanged(int)"),self.changeActive)
+        self.ui.checkBox.setCheckState(Qt.Unchecked)
 
         # connect layer list in plugin combobox
         QObject.connect(self.layerRegistry, SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
         QObject.connect(self.layerRegistry, SIGNAL("layerRemoved(QString)"), self.remove_layer)
 
-        # always start in not activated mode
-        self.ui.toolButton.setChecked(False)
 
         # connect speichern als CSV
         QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
@@ -77,7 +75,7 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # (from value tool)
     def changeActive(self):
-        if self.ui.toolButton.isChecked():
+        if self.ui.checkBox.isChecked():
             self.canvas.setMapTool(self.zoneStatTool)
             self.zoneStatTool.canvasClicked.connect(self.listen_xCoordinates)
             self.zoneStatTool.canvasClicked.connect(self.listen_yCoordinates)
@@ -87,7 +85,7 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # Anzeige der Werte an und aussetellen
     def changePlot(self):
-        self.changeActive(self.ui.cbxActive.checkState())
+        self.changeActive(self.ui.checkBox.checkState())
 
     # Gebe X-Koordinate an Mousepositon aus und überschreibe vorherige (append ergänzt)
     def listen_xCoordinates(self, point):
