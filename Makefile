@@ -32,11 +32,11 @@ TRANSLATIONS =
 
 PLUGINNAME = Sektormittelwerte
 
-PY_FILES = sectormean.py sectormeandialog.py __init__.py
+PY_FILES = sectormean.py sectormeandialog.py __init__.py sector.py
 
 EXTRAS = icon.png metadata.txt
 
-UI_FILES = ui_sectormean.py
+UI_FILES = ui_sectormean.py ui_sectormean.ui
 
 RESOURCE_FILES = resources_rc.py
 
