@@ -7,32 +7,27 @@
 
 # Mandatory items:
 
-
 [general]
 name=Sektormittelwerte
-qgisMinimumVersion=2.0
 description=Ermittlung sektorgemittelter, gewichteter Rasterwerte
-version=1.1
+category=Raster
+qgisMinimumVersion=2.0
+qgisMaximumVersion=2.99
+website=http://www.gbd-consult.de
+version=1.1.2
 author=Geoinformatikbüro Dassau GmbH
 email=info@gbd-consult.de
-
-# end of mandatory metadata
+about=Geoinformatikbüro Dassau GmbH, Rethelstraße 153, 40237 Düsseldorf
 
 # Optional items:
-
 # Uncomment the following line and add your changelog entries:
 # changelog=
-
 # tags are comma separated with spaces allowed
-tags=
-
+# tags=
 homepage=http://plugins.gbd-consult.de
-tracker=
+# tracker=
 repository=https://github.com/gbd-consult/Sektormittelwerte
 icon=icon.png
-# experimental flag
 experimental=False
-
-# deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
 
