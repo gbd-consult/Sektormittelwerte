@@ -11,8 +11,8 @@
 [general]
 name=Sektormittelwerte
 qgisMinimumVersion=2.0
-description=Ermittlung sektorgemittelter Rasterwerte
-version=0.2
+description=Ermittlung sektorgemittelter, gewichteter Rasterwerte
+version=1.1
 author=Geoinformatikbüro Dassau GmbH
 email=info@gbd-consult.de
 
@@ -26,9 +26,9 @@ email=info@gbd-consult.de
 # tags are comma separated with spaces allowed
 tags=
 
-homepage=
+homepage=http://plugins.gbd-consult.de
 tracker=
-repository=
+repository=https://github.com/gbd-consult/Sektormittelwerte
 icon=icon.png
 # experimental flag
 experimental=False
