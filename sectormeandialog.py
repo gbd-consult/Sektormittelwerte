@@ -22,19 +22,19 @@ import logging
 # change level back to logging.WARNING(default) before release
 logging.basicConfig(level=logging.WARNING)
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from ui_sectormean import Ui_SectorMean
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QDialog, QFileDialog
+from .ui_sectormean import Ui_SectorMean
 
 from qgis.core import *
 from qgis.gui import *
 
 # modules to create sector circle
 import math, csv
-import sector
+from .sector import *
 
-class SectorMeanDialog(QtGui.QDialog):
+class SectorMeanDialog(QDialog):
     def __init__(self,  iface):
         # always put the plugin dialog on top
         QDialog.__init__(self,  None, Qt.WindowStaysOnTopHint)
@@ -47,21 +47,20 @@ class SectorMeanDialog(QtGui.QDialog):
 
         self.iface=iface
         self.canvas=self.iface.mapCanvas()
-        self.layerRegistry = QgsMapLayerRegistry.instance()
-        print self.layerRegistry
+        self.layerRegistry = QgsProject.instance()
         self.zoneStatTool = QgsMapToolEmitPoint(self.canvas)
 
         # connect start/stop interaktive display
-        QObject.connect(self.ui.checkBox,SIGNAL("stateChanged(int)"),self.changeActive)
+        self.ui.checkBox.stateChanged.connect(self.changeActive)
         self.ui.checkBox.setCheckState(Qt.Unchecked)
 
         # connect layer list in plugin combobox
-        QObject.connect(self.layerRegistry, SIGNAL("layerWasAdded(QgsMapLayer *)"), self.add_layer)
-        QObject.connect(self.layerRegistry, SIGNAL("layerRemoved(QString)"), self.remove_layer)
+        self.layerRegistry.layerWasAdded.connect(self.add_layer)
+        self.layerRegistry.layerRemoved.connect(self.remove_layer)
 
 
         # connect speichern als CSV
-        QObject.connect(self.ui.buttonSaveAs, SIGNAL("clicked()"), self.saveCSV)
+        self.ui.buttonSaveAs.clicked.connect(self.saveCSV)
 
         # load raster and point layer into combobox
         self.initVectorLayerCombobox( self.ui.InPoint, 'key_of_default_layer' )
@@ -103,9 +102,10 @@ class SectorMeanDialog(QtGui.QDialog):
 
     # Gebe Mittelwert der Rauhigkeit an Mousepositon aus und überschreibe vorherige (append ergänzt)
     def listen_z0(self, point):
-        mean = sector.bufferMean(QgsPoint(self.xCoord, self.yCoord), \
+        authid = self.iface.mapCanvas().mapSettings().destinationCrs().authid()
+        mean = bufferMean(QgsPointXY(self.xCoord, self.yCoord), \
             self.getRasterLayerByName(self.ui.InRast.currentText()), \
-            self.ui.bufferz0.value())
+            self.ui.bufferz0.value(), authid)
         if mean != -9999:
             self.ui.outputMean.setText("%.2f" % float(mean))
         else:
@@ -142,8 +142,9 @@ class SectorMeanDialog(QtGui.QDialog):
     def initRasterLayerCombobox(self, combobox, layerid):
         combobox.clear()
         reg = self.layerRegistry
-        for ( key, layer ) in reg.mapLayers().iteritems():
-            if layer.type() == QgsMapLayer.RasterLayer: combobox.addItem( layer.name(), key )
+        for ( key, layer ) in reg.mapLayers().items():
+            if type(layer) == QgsRasterLayer:
+                combobox.addItem( layer.name(), key )
         idx = combobox.findData( layerid )
         if idx != -1:
             combobox.setCurrentIndex( idx )
@@ -151,8 +152,8 @@ class SectorMeanDialog(QtGui.QDialog):
     # Hole Liste geladener Rasterlayer
     def getRasterLayerByName( self,  myName ):
         layerMap = self.layerRegistry.mapLayers()
-        for name, layer in layerMap.iteritems():
-            if layer.type() == QgsMapLayer.RasterLayer and layer.name() == myName:
+        for name, layer in layerMap.items():
+            if type(layer) == QgsRasterLayer and layer.name() == myName:
                 if layer.isValid():
                     return layer
                 else:
@@ -162,16 +163,17 @@ class SectorMeanDialog(QtGui.QDialog):
     def initVectorLayerCombobox(self, combobox, default):
         combobox.clear()
         reg = self.layerRegistry
-        for ( key, layer ) in reg.mapLayers().iteritems():
-            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point: combobox.addItem( layer.name(), key )
+        for ( key, layer ) in reg.mapLayers().items():
+            if type(layer) == QgsVectorLayer and layer.wkbType() == QgsWkbTypes.Point:
+                combobox.addItem( layer.name(), key )
         idx = combobox.findData( default )
         if idx != -1:
             combobox.setCurrentIndex( idx )
 
     def getVectorLayerByName( self,  myName ):
         layermap = self.layerRegistry.mapLayers()
-        for name, layer in layermap.iteritems():
-            if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point and layer.name() == myName:
+        for name, layer in layermap.items():
+            if type(layer) == QgsVectorLayer and layer.wkbType() == QgsWkbTypes.Point and layer.name() == myName:
                 if layer.isValid():
                     return layer
                 else:
@@ -185,19 +187,19 @@ class SectorMeanDialog(QtGui.QDialog):
         if self.check_vector is False:
             return True
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
-	if csvLayer:
-            fields = csvLayer.pendingFields()
+        if csvLayer:
+            fields = csvLayer.fields()
             field_names = [field.name() for field in fields]
             default = [u'st', u'stlon', u'stlat', u'distm']
-            # Check if first field_names match with expected fieldnames
-            if len(filter(lambda (a,b): a == b, zip(field_names,default))) != len(default):
-                self.iface.messageBar().pushMessage("Error", "Standortdatei hat falsche Spaltennamen.", QgsMessageBar.CRITICAL, 5)
-                return False
+            for d in default:
+                if d not in field_names:
+                    self.iface.messageBar().pushCritical("Error", "Standortdatei hat falsche Spaltennamen.", 5)
+                    return False
         return True
 
     # Rasterwert an Position
     def sampleRaster20(self, layer, x, y):
-        ident = layer.dataProvider().identify(QgsPoint(x,y), QgsRaster.IdentifyFormatValue ).results()
+        ident = layer.dataProvider().identify(QgsPointXY(x,y), QgsRaster.IdentifyFormatValue ).results()
         return ident[1]
 
     # Frage Wert für die Rasterlayer an Position [stx],[sty] ab
@@ -216,7 +218,7 @@ class SectorMeanDialog(QtGui.QDialog):
         # KBS fuer das Umprojizieren definieren (Corine ist in EPSG:32632 abgelegt)
         srcCrs = QgsCoordinateReferenceSystem("EPSG:4326")
         destCrs = QgsCoordinateReferenceSystem("EPSG:32632")
-        transformer = QgsCoordinateTransform(srcCrs, destCrs)
+        transformer = QgsCoordinateTransform(srcCrs, destCrs, QgsProject.instance())
         csvLayer = self.getVectorLayerByName(self.ui.InPoint.currentText())
         csvProvider = csvLayer.dataProvider()
         csvFeature = QgsFeature()
@@ -256,15 +258,16 @@ class SectorMeanDialog(QtGui.QDialog):
             steps = 90 # subdivision of circle. The higher, the smoother it will be
             sectors = 12 # Anzahl der Sektoren (12 bedeutet 30 Grad pro Sektor)
             radius = float(distm) # Kreisradius aus Steuerdatei  - distm
-            center = QgsPoint(xutm32,yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
+            center = QgsPointXY(xutm32,yutm32) # Koordinaten, umgerechnet aus WGS84 Koordinaten der Steuerdatei
             raster = self.getRasterLayerByName(self.ui.InRast.currentText())
 
             # Sector 0 contains the mean of the whole circle
-            mean_total = sector.bufferMean(center, raster, radius)
+            authid = self.iface.mapCanvas().mapSettings().destinationCrs().authid()
+            mean_total = bufferMean(center, raster, radius, authid)
             pisect0.append(mean_total)
 
             # Sector 1 to n contain the mean for each sector
-            mean_sector = sector.sectorMean(center, raster, radius, sectors, steps)
+            mean_sector = sectorMean(center, raster, radius, sectors, steps, authid)
             pisectx.append(mean_sector)
 
             # values for weighted means
@@ -275,15 +278,15 @@ class SectorMeanDialog(QtGui.QDialog):
         self.ui.progressBar.setValue(0)
 
         self.standortname = self.ui.InPoint.currentText()
-        self.fileName = QFileDialog.getSaveFileName(self.ui, "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")
+        (self.fileName, extension) = QFileDialog.getSaveFileName(self, "Save As", self.standortname + "_out.csv","Comma Separated Value (*.csv)")
 
         # Quit if no output was selected
         if self.fileName != "":
-            with open(self.fileName, 'wb') as csvfile:
+            with open(self.fileName, 'w') as csvfile:
                 datawriter = csv.writer(csvfile)
                 round_ = lambda x: round(x,2) # round to 2 decimal digits
                 # Check if we have the correct number of hisect values for weighted output
-                if reduce(lambda a, b: a & b, [len(a) == sectors for a in phisect], True):
+                if not False in [len(a) == sectors for a in phisect]:
                     header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm'] \
                     + ['isect' + str(x) for x in range(13)] \
                     + ['hisect' + str(x) for x in range(1,13)] \
@@ -294,7 +297,7 @@ class SectorMeanDialog(QtGui.QDialog):
                     for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1, lst2 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx, phisect):
                         wisect = [round(x * y,2) for (x,y) in zip(lst1, lst2)]
                         cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] \
-                        + map(round_, lst1) + map(round_, lst2) + wisect + [sum(wisect)]
+                        + list(map(round_, lst1)) + list(map(round_, lst2)) + wisect + [sum(wisect)]
                         datawriter.writerow(cols)
                 else: # non weighted output
                     header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm'] \
@@ -302,5 +305,5 @@ class SectorMeanDialog(QtGui.QDialog):
                     # write table header
                     datawriter.writerow(header)
                     for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx):
-                        cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] + map(round_, lst1)
+                        cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] + list(map(round_, lst1))
                         datawriter.writerow(cols)

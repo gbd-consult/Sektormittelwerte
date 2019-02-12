@@ -28,7 +28,7 @@ def description():
 
 
 def version():
-    return "Version 1.0"
+    return "Version 1.2"
 
 
 def icon():
@@ -36,7 +36,7 @@ def icon():
 
 
 def qgisMinimumVersion():
-    return "2.0"
+    return "3.0"
 
 def author():
     return "Geoinformatikbüro Dassau GmbH"
@@ -46,5 +46,5 @@ def email():
 
 def classFactory(iface):
     # load SectorMean class from file SectorMean
-    from sectormean import SectorMean
+    from .sectormean import SectorMean
     return SectorMean(iface)

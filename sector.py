@@ -20,23 +20,25 @@
 
 from qgis.core import *
 from qgis.analysis import QgsZonalStatistics
-from PyQt4.QtCore import QVariant
+from PyQt5.QtCore import QVariant
 import math
 
-def generateSectors(point, n, substeps, radius):
+def generateSectors(point, n, substeps, radius, authid):
     """Generate Sectors for a study side. Returns a QgsVectorLayer
 
     arguments:
-    point       : source point of sector generation (QgsPoint)
+    point       : source point of sector generation (QgsPointXY)
     n           : number of sectors to generate
     substeps    : Number of substeps used to render the outer edge of each sector
     radius      : radius of the resulting Sectors
+    authid  : id of the Projects CRS
     """
     step = 360.0 / n
     # Start with the north facing sector
     offset = step / 2 + 90
 
-    layer = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
+    #layer = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
+    layer = QgsVectorLayer("Polygon?crs=%s" % authid,  "pointbuffer", "memory")
     layer.startEditing()
     layer.addAttribute(QgsField("sectorID", QVariant.Int))
 
@@ -48,28 +50,29 @@ def generateSectors(point, n, substeps, radius):
         for a in angles:
             x = (math.cos(math.radians(a)) * radius) + point.x()
             y = (math.sin(math.radians(a)) * radius) + point.y()
-            poly.append(QgsPoint(x,y))
+            poly.append(QgsPointXY(x,y))
 
         feat = QgsFeature()
-        feat.setGeometry(QgsGeometry.fromPolygon([poly]))
+        feat.setGeometry(QgsGeometry.fromPolygonXY([poly]))
         feat.setAttributes([(n - i)])
         layer.addFeatures([feat])
     layer.commitChanges()
     layer.updateExtents()
     return layer
 
-def sectorMean(point, raster, radius, n, substeps):
+def sectorMean(point, raster, radius, n, substeps, authid):
     """Calculate Sector Statistics for a study site, returns a list of mean values
 
     arguments:
-    point   : coordinates of the study site (QgsPoint)
+    point   : coordinates of the study site (QgsPointXY)
     raster  : raster source layer
     radius  : radius for the sectors
     n           : number of sectors to generate
     substeps    : Number of substeps used to render the outer edge of each sector
+    authid  : id of the Projects CRS
     """
-    layer = generateSectors(point, n, substeps, radius)
-    stats = QgsZonalStatistics(layer, raster.source())
+    layer = generateSectors(point, n, substeps, radius, authid)
+    stats = QgsZonalStatistics(layer, raster)
     stats.calculateStatistics(None)
     mean = []
     for sfeat in layer.getFeatures():
@@ -83,22 +86,24 @@ def sectorMean(point, raster, radius, n, substeps):
         mean.append(mean_value)
     return mean
 
-def bufferMean(point, raster, radius):
+def bufferMean(point, raster, radius, authid):
     """Calculate Buffer Statistics for a study site, returns the mean value
 
     arguments:
-    point   : coordinates of the study site (QgsPoint)
+    point   : coordinates of the study site (QgsPointXY)
     raster  : raster source layer
     radius  : radius of the buffer
+    authid  : id of the Projects CRS
     """
-    layer = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
+    #layer = QgsVectorLayer("Polygon?crs=epsg:4326", "pointbuffer", "memory")
+    layer = QgsVectorLayer("Polygon?crs=%s" % authid,  "pointbuffer", "memory")
     layer.startEditing()
     feat = QgsFeature()
-    feat.setGeometry(QgsGeometry.fromPoint(point).buffer(radius,5))
+    feat.setGeometry(QgsGeometry.fromPointXY(point).buffer(radius,5))
     layer.addFeature(feat)
     layer.commitChanges()
     layer.updateExtents()
-    stats = QgsZonalStatistics(layer, raster.source())
+    stats = QgsZonalStatistics(layer, raster)
     stats.calculateStatistics(None)
 
     for f in layer.getFeatures():

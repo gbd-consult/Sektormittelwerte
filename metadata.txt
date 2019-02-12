@@ -11,10 +11,10 @@
 name=Sektormittelwerte
 description=Ermittlung sektorgemittelter, gewichteter Rasterwerte
 category=Raster
-qgisMinimumVersion=2.0
-qgisMaximumVersion=2.99
+qgisMinimumVersion=3.0
+qgisMaximumVersion=3.99
 website=http://www.gbd-consult.de
-version=1.1.2
+version=1.2
 author=Geoinformatikbüro Dassau GmbH
 email=info@gbd-consult.de
 about=Geoinformatikbüro Dassau GmbH, Rethelstraße 153, 40237 Düsseldorf

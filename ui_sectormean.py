@@ -1,38 +1,166 @@
 # -*- coding: utf-8 -*-
-"""
-/***************************************************************************
- QGIS Plugin zur Ermittlung sektorgemittelter Rasterwerte
- -------------------
-        begin                : 2013-08-09
-        copyright            : (C) 2013 by Geoinformatikbüro Dassau GmbH
-        email                : info@gbd-consult.de
- ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-"""
+# Form implementation generated from reading ui file 'ui_sectormean.ui'
+#
+# Created by: PyQt5 UI code generator 5.11.2
+#
+# WARNING! All changes made in this file will be lost!
 
-import os
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-from PyQt4 import QtGui, uic
+class Ui_SectorMean(object):
+    def setupUi(self, SectorMean):
+        SectorMean.setObjectName("SectorMean")
+        SectorMean.resize(330, 270)
+        SectorMean.setMinimumSize(QtCore.QSize(330, 270))
+        SectorMean.setMaximumSize(QtCore.QSize(330, 270))
+        SectorMean.setStyleSheet("QComboBox {\n"
+"    padding-left : 2px\n"
+"}")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(SectorMean)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setSpacing(3)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.label_1 = QtWidgets.QLabel(SectorMean)
+        self.label_1.setMinimumSize(QtCore.QSize(0, 20))
+        self.label_1.setObjectName("label_1")
+        self.horizontalLayout_9.addWidget(self.label_1)
+        self.InPoint = QtWidgets.QComboBox(SectorMean)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.InPoint.sizePolicy().hasHeightForWidth())
+        self.InPoint.setSizePolicy(sizePolicy)
+        self.InPoint.setMinimumSize(QtCore.QSize(210, 30))
+        self.InPoint.setMaximumSize(QtCore.QSize(210, 30))
+        self.InPoint.setObjectName("InPoint")
+        self.horizontalLayout_9.addWidget(self.InPoint)
+        self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.label_2 = QtWidgets.QLabel(SectorMean)
+        self.label_2.setMinimumSize(QtCore.QSize(0, 20))
+        self.label_2.setObjectName("label_2")
+        self.horizontalLayout_10.addWidget(self.label_2)
+        self.InRast = QtWidgets.QComboBox(SectorMean)
+        self.InRast.setMinimumSize(QtCore.QSize(210, 30))
+        self.InRast.setMaximumSize(QtCore.QSize(210, 30))
+        self.InRast.setObjectName("InRast")
+        self.horizontalLayout_10.addWidget(self.InRast)
+        self.verticalLayout.addLayout(self.horizontalLayout_10)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.progressBar = QtWidgets.QProgressBar(SectorMean)
+        self.progressBar.setMinimumSize(QtCore.QSize(160, 21))
+        self.progressBar.setMaximumSize(QtCore.QSize(160, 21))
+        self.progressBar.setProperty("value", 0)
+        self.progressBar.setObjectName("progressBar")
+        self.horizontalLayout_3.addWidget(self.progressBar)
+        self.buttonSaveAs = QtWidgets.QPushButton(SectorMean)
+        self.buttonSaveAs.setMinimumSize(QtCore.QSize(135, 23))
+        self.buttonSaveAs.setMaximumSize(QtCore.QSize(135, 23))
+        self.buttonSaveAs.setToolTip("")
+        self.buttonSaveAs.setObjectName("buttonSaveAs")
+        self.horizontalLayout_3.addWidget(self.buttonSaveAs)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.groupBox = QtWidgets.QGroupBox(SectorMean)
+        self.groupBox.setMinimumSize(QtCore.QSize(300, 130))
+        self.groupBox.setMaximumSize(QtCore.QSize(330, 150))
+        self.groupBox.setObjectName("groupBox")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.groupBox)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_3.setSpacing(3)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.checkBox = QtWidgets.QCheckBox(self.groupBox)
+        self.checkBox.setObjectName("checkBox")
+        self.horizontalLayout_11.addWidget(self.checkBox)
+        self.line_2 = QtWidgets.QFrame(self.groupBox)
+        self.line_2.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.horizontalLayout_11.addWidget(self.line_2)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_11.addItem(spacerItem1)
+        self.label_11 = QtWidgets.QLabel(self.groupBox)
+        self.label_11.setMinimumSize(QtCore.QSize(0, 20))
+        self.label_11.setObjectName("label_11")
+        self.horizontalLayout_11.addWidget(self.label_11)
+        self.bufferz0 = QtWidgets.QSpinBox(self.groupBox)
+        self.bufferz0.setMinimumSize(QtCore.QSize(0, 23))
+        self.bufferz0.setMaximumSize(QtCore.QSize(16777215, 23))
+        self.bufferz0.setMinimum(0)
+        self.bufferz0.setMaximum(10000)
+        self.bufferz0.setSingleStep(100)
+        self.bufferz0.setProperty("value", 1500)
+        self.bufferz0.setObjectName("bufferz0")
+        self.horizontalLayout_11.addWidget(self.bufferz0)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_11)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 60, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label_3 = QtWidgets.QLabel(self.groupBox)
+        self.label_3.setMinimumSize(QtCore.QSize(90, 0))
+        self.label_3.setMaximumSize(QtCore.QSize(90, 33))
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout.addWidget(self.label_3)
+        self.label = QtWidgets.QLabel(self.groupBox)
+        self.label.setMinimumSize(QtCore.QSize(90, 0))
+        self.label.setMaximumSize(QtCore.QSize(90, 33))
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+        self.label_4 = QtWidgets.QLabel(self.groupBox)
+        self.label_4.setMinimumSize(QtCore.QSize(90, 0))
+        self.label_4.setMaximumSize(QtCore.QSize(90, 33))
+        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout.addWidget(self.label_4)
+        self.verticalLayout_3.addLayout(self.horizontalLayout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.outputXEdit = QtWidgets.QTextEdit(self.groupBox)
+        self.outputXEdit.setMinimumSize(QtCore.QSize(90, 30))
+        self.outputXEdit.setMaximumSize(QtCore.QSize(90, 30))
+        self.outputXEdit.setObjectName("outputXEdit")
+        self.horizontalLayout_2.addWidget(self.outputXEdit)
+        self.outputYEdit = QtWidgets.QTextEdit(self.groupBox)
+        self.outputYEdit.setMinimumSize(QtCore.QSize(90, 30))
+        self.outputYEdit.setMaximumSize(QtCore.QSize(90, 30))
+        self.outputYEdit.setObjectName("outputYEdit")
+        self.horizontalLayout_2.addWidget(self.outputYEdit)
+        self.outputMean = QtWidgets.QTextEdit(self.groupBox)
+        self.outputMean.setMinimumSize(QtCore.QSize(90, 30))
+        self.outputMean.setMaximumSize(QtCore.QSize(90, 30))
+        self.outputMean.setObjectName("outputMean")
+        self.horizontalLayout_2.addWidget(self.outputMean)
+        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
+        self.verticalLayout_4.addLayout(self.verticalLayout_3)
+        self.verticalLayout_2.addWidget(self.groupBox)
 
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'ui_sectormean.ui'))
+        self.retranslateUi(SectorMean)
+        QtCore.QMetaObject.connectSlotsByName(SectorMean)
 
+    def retranslateUi(self, SectorMean):
+        _translate = QtCore.QCoreApplication.translate
+        SectorMean.setWindowTitle(_translate("SectorMean", "Sektormittelwerte"))
+        self.label_1.setText(_translate("SectorMean", "Standortdatei"))
+        self.label_2.setText(_translate("SectorMean", "Rauhigkeit (z0)"))
+        self.buttonSaveAs.setText(_translate("SectorMean", "Analyse speichern"))
+        self.groupBox.setTitle(_translate("SectorMean", "Interaktive Anzeige"))
+        self.checkBox.setText(_translate("SectorMean", "Start/Stop"))
+        self.label_11.setText(_translate("SectorMean", "Radius (z0)"))
+        self.label_3.setText(_translate("SectorMean", "X-Wert"))
+        self.label.setText(_translate("SectorMean", "Y-Wert"))
+        self.label_4.setText(_translate("SectorMean", "Mittelwert (z0)"))
 
-class Ui_SectorMean(QtGui.QDialog, FORM_CLASS):
-    def __init__(self, parent=None):
-        """Constructor."""
-        super(Ui_SectorMean, self).__init__(parent)
-        # Set up the user interface from Designer.
-        # After setupUI you can access any designer object by doing
-        # self.<objectname>, and you can use autoconnect slots - see
-        # http://qt-project.org/doc/qt-4.8/designer-using-a-ui-file.html
-        # #widgets-and-dialogs-with-auto-connect
-        self.setupUi(self)
