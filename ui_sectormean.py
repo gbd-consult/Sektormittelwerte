@@ -11,9 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SectorMean(object):
     def setupUi(self, SectorMean):
         SectorMean.setObjectName("SectorMean")
-        SectorMean.resize(330, 270)
+        SectorMean.resize(350, 300)
         SectorMean.setMinimumSize(QtCore.QSize(330, 270))
-        SectorMean.setMaximumSize(QtCore.QSize(330, 270))
+        SectorMean.setMaximumSize(QtCore.QSize(350, 300))
         SectorMean.setStyleSheet("QComboBox {\n"
 "    padding-left : 2px\n"
 "}")
