@@ -1,7 +1,6 @@
 *.pyc
-
 .eric4project
 *.e4p
-
+*.qgs~
 *.zip
 *.swp
