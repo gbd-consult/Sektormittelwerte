@@ -1,22 +1,47 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis projectname="" version="2.18.9">
+<qgis version="3.4.4-Madeira" projectname="">
+  <homePath path=""/>
   <title></title>
   <autotransaction active="0"/>
   <evaluateDefaultValues active="0"/>
-  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+  <trust active="0"/>
+  <projectCrs>
+    <spatialrefsys>
+      <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
+      <srsid>3116</srsid>
+      <srid>32632</srid>
+      <authid>EPSG:32632</authid>
+      <description>WGS 84 / UTM zone 32N</description>
+      <projectionacronym>utm</projectionacronym>
+      <ellipsoidacronym>WGS84</ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+  <layer-tree-group>
     <customproperties/>
-    <layer-tree-layer expanded="1" providerKey="delimitedtext" checked="Qt::Checked" id="mm_2012_test1_hisect20170607142308320" source="file:///home/kessler/praktikum/qgisPlugins/Sektormittelwerte/testdaten/mm_2012_test1_hisect.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="mm_2012_test1_hisect">
+    <layer-tree-layer checked="Qt::Checked" source="file:///arbeit/github/Sektormittelwerte/testdaten/mm_2012_test1_hisect.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="mm_2012_test1_hisect" id="mm_2012_test1_hisect20170607142308320" expanded="1" providerKey="delimitedtext">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="delimitedtext" checked="Qt::Checked" id="mm_2012_test120170607142245391" source="file:///home/kessler/praktikum/qgisPlugins/Sektormittelwerte/testdaten/mm_2012_test1.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="mm_2012_test1">
+    <layer-tree-layer checked="Qt::Checked" source="file:///arbeit/github/Sektormittelwerte/testdaten/mm_2012_test1.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="mm_2012_test1" id="mm_2012_test120170607142245391" expanded="1" providerKey="delimitedtext">
       <customproperties/>
     </layer-tree-layer>
-    <layer-tree-layer expanded="1" providerKey="gdal" checked="Qt::Checked" id="corine2006_z0_utm32_subset20170607142234047" source="/home/kessler/praktikum/qgisPlugins/Sektormittelwerte/testdaten/corine2006_z0_utm32_subset.tif" name="corine2006_z0_utm32_subset">
+    <layer-tree-layer checked="Qt::Checked" source="./corine2006_z0_utm32_subset.tif" name="corine2006_z0_utm32_subset" id="corine2006_z0_utm32_subset20170607142234047" expanded="1" providerKey="gdal">
       <customproperties/>
     </layer-tree-layer>
+    <custom-order enabled="0">
+      <item>corine2006_z0_utm32_subset20170607142234047</item>
+      <item>mm_2012_test120170607142245391</item>
+      <item>mm_2012_test1_hisect20170607142308320</item>
+    </custom-order>
   </layer-tree-group>
+  <snapping-settings enabled="0" type="1" tolerance="0" mode="1" unit="2" intersection-snapping="0">
+    <individual-layer-settings>
+      <layer-setting id="mm_2012_test120170607142245391" enabled="0" units="1" type="1" tolerance="12"/>
+      <layer-setting id="mm_2012_test1_hisect20170607142308320" enabled="0" units="1" type="1" tolerance="12"/>
+    </individual-layer-settings>
+  </snapping-settings>
   <relations/>
-  <mapcanvas>
+  <mapcanvas name="theMapCanvas" annotationsVisible="1">
     <units>meters</units>
     <extent>
       <xmin>350957.5</xmin>
@@ -25,7 +50,6 @@
       <ymax>5991357.5</ymax>
     </extent>
     <rotation>0</rotation>
-    <projections>1</projections>
     <destinationsrs>
       <spatialrefsys>
         <proj4>+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</proj4>
@@ -39,38 +63,29 @@
       </spatialrefsys>
     </destinationsrs>
     <rendermaptile>0</rendermaptile>
-    <layer_coordinate_transform_info>
-      <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_test1_hisect20170607142308320"/>
-      <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:32632" srcDatumTransform="-1" destDatumTransform="-1" layerid="corine2006_z0_utm32_subset20170607142234047"/>
-      <layer_coordinate_transform destAuthId="EPSG:32632" srcAuthId="EPSG:4326" srcDatumTransform="-1" destDatumTransform="-1" layerid="mm_2012_test120170607142245391"/>
-    </layer_coordinate_transform_info>
   </mapcanvas>
-  <layer-tree-canvas>
-    <custom-order enabled="0">
-      <item>corine2006_z0_utm32_subset20170607142234047</item>
-      <item>mm_2012_test120170607142245391</item>
-      <item>mm_2012_test1_hisect20170607142308320</item>
-    </custom-order>
-  </layer-tree-canvas>
+  <projectModels/>
   <legend updateDrawingOrder="true">
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_test1_hisect" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="mm_2012_test1_hisect20170607142308320" visible="1"/>
+    <legendlayer checked="Qt::Checked" name="mm_2012_test1_hisect" open="true" drawingOrder="-1" showFeatureCount="0">
+      <filegroup hidden="false" open="true">
+        <legendlayerfile isInOverview="0" visible="1" layerid="mm_2012_test1_hisect20170607142308320"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="mm_2012_test1" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="mm_2012_test120170607142245391" visible="1"/>
+    <legendlayer checked="Qt::Checked" name="mm_2012_test1" open="true" drawingOrder="-1" showFeatureCount="0">
+      <filegroup hidden="false" open="true">
+        <legendlayerfile isInOverview="0" visible="1" layerid="mm_2012_test120170607142245391"/>
       </filegroup>
     </legendlayer>
-    <legendlayer drawingOrder="-1" open="true" checked="Qt::Checked" name="corine2006_z0_utm32_subset" showFeatureCount="0">
-      <filegroup open="true" hidden="false">
-        <legendlayerfile isInOverview="0" layerid="corine2006_z0_utm32_subset20170607142234047" visible="1"/>
+    <legendlayer checked="Qt::Checked" name="corine2006_z0_utm32_subset" open="true" drawingOrder="-1" showFeatureCount="0">
+      <filegroup hidden="false" open="true">
+        <legendlayerfile isInOverview="0" visible="1" layerid="corine2006_z0_utm32_subset20170607142234047"/>
       </filegroup>
     </legendlayer>
   </legend>
+  <mapViewDocks/>
+  <mapViewDocks3D/>
   <projectlayers>
-    <maplayer minimumScale="0" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+    <maplayer autoRefreshEnabled="0" autoRefreshTime="0" maxScale="0" refreshOnNotifyEnabled="0" styleCategories="AllStyleCategories" minScale="1e+8" type="raster" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="">
       <extent>
         <xmin>353500</xmin>
         <ymin>5919300</ymin>
@@ -95,19 +110,56 @@
           <geographicflag>false</geographicflag>
         </spatialrefsys>
       </srs>
-      <customproperties>
-        <property key="identify/format" value="Value"/>
-      </customproperties>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>false</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
       <provider>gdal</provider>
       <noData>
         <noDataList bandNo="1" useSrcNoData="1"/>
       </noData>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
       </map-layer-style-manager>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties>
+        <property value="Value" key="identify/format"/>
+      </customproperties>
       <pipe>
-        <rasterrenderer gradient="BlackToWhite" opacity="1" alphaBand="-1" type="singlebandgray" grayBand="1">
+        <rasterrenderer alphaBand="-1" type="singlebandgray" gradient="BlackToWhite" grayBand="1" opacity="1">
           <rasterTransparency/>
+          <minMaxOrigin>
+            <limits>None</limits>
+            <extent>WholeRaster</extent>
+            <statAccuracy>Estimated</statAccuracy>
+            <cumulativeCutLower>0.02</cumulativeCutLower>
+            <cumulativeCutUpper>0.98</cumulativeCutUpper>
+            <stdDevFactor>2</stdDevFactor>
+          </minMaxOrigin>
           <contrastEnhancement>
             <minValue>0.02043</minValue>
             <maxValue>0.99936</maxValue>
@@ -115,12 +167,18 @@
           </contrastEnhancement>
         </rasterrenderer>
         <brightnesscontrast brightness="0" contrast="0"/>
-        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <huesaturation colorizeGreen="128" colorizeStrength="100" saturation="0" grayscaleMode="0" colorizeRed="255" colorizeBlue="128" colorizeOn="0"/>
         <rasterresampler maxOversampling="2"/>
       </pipe>
       <blendMode>0</blendMode>
     </maplayer>
-    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+    <maplayer autoRefreshEnabled="0" autoRefreshTime="0" geometry="Point" maxScale="0" simplifyLocal="1" simplifyAlgorithm="0" refreshOnNotifyEnabled="0" simplifyDrawingHints="1" readOnly="0" styleCategories="AllStyleCategories" simplifyMaxScale="1" simplifyDrawingTol="1" minScale="1e+8" type="vector" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" labelsEnabled="1">
+      <extent>
+        <xmin>7.81944399999999984</xmin>
+        <ymin>53.70638900000000149</ymin>
+        <xmax>7.81944399999999984</xmax>
+        <ymax>53.70638900000000149</ymax>
+      </extent>
       <id>mm_2012_test120170607142245391</id>
       <datasource>file:./mm_2012_test1.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
       <keywordList>
@@ -139,116 +197,185 @@
           <geographicflag>true</geographicflag>
         </spatialrefsys>
       </srs>
-      <provider encoding="System">delimitedtext</provider>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>false</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
       <vectorjoins/>
       <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
       <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
       </map-layer-style-manager>
-      <edittypes>
-        <edittype widgetv2type="TextEdit" name="st">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="stlon">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="stlat">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="distm">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-      </edittypes>
-      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 symbollevels="0" enableorderby="0" forceraster="0" type="singleSymbol">
         <symbols>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="79,136,73,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
+          <symbol clip_to_extent="1" name="0" alpha="1" force_rhr="0" type="marker">
+            <layer pass="0" locked="0" enabled="1" class="SimpleMarker">
+              <prop v="0" k="angle"/>
+              <prop v="79,136,73,255" k="color"/>
+              <prop v="1" k="horizontal_anchor_point"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="circle" k="name"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0,0,0,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0" k="outline_width"/>
+              <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="diameter" k="scale_method"/>
+              <prop v="2" k="size"/>
+              <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+              <prop v="MM" k="size_unit"/>
+              <prop v="1" k="vertical_anchor_point"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option value="" name="name" type="QString"/>
+                  <Option name="properties"/>
+                  <Option value="collection" name="type" type="QString"/>
+                </Option>
+              </data_defined_properties>
             </layer>
           </symbol>
         </symbols>
         <rotation/>
-        <sizescale scalemethod="diameter"/>
+        <sizescale/>
       </renderer-v2>
-      <labeling type="simple"/>
       <customproperties/>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
-      <layerTransparency>0</layerTransparency>
-      <displayfield>st</displayfield>
-      <label>0</label>
-      <labelattributes>
-        <label fieldname="" text="Beschriftung"/>
-        <family fieldname="" name="Noto Sans"/>
-        <size fieldname="" units="pt" value="12"/>
-        <bold fieldname="" on="0"/>
-        <italic fieldname="" on="0"/>
-        <underline fieldname="" on="0"/>
-        <strikeout fieldname="" on="0"/>
-        <color fieldname="" red="0" blue="0" green="0"/>
-        <x fieldname=""/>
-        <y fieldname=""/>
-        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
-        <angle fieldname="" value="0" auto="0"/>
-        <alignment fieldname="" value="center"/>
-        <buffercolor fieldname="" red="255" blue="255" green="255"/>
-        <buffersize fieldname="" units="pt" value="1"/>
-        <bufferenabled fieldname="" on=""/>
-        <multilineenabled fieldname="" on=""/>
-        <selectedonly on=""/>
-      </labelattributes>
-      <annotationform></annotationform>
+      <layerOpacity>1</layerOpacity>
+      <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="st">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="stlon">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="stlat">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="distm">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
       <aliases>
-        <alias field="st" index="0" name=""/>
-        <alias field="stlon" index="1" name=""/>
-        <alias field="stlat" index="2" name=""/>
-        <alias field="distm" index="3" name=""/>
+        <alias index="0" name="" field="st"/>
+        <alias index="1" name="" field="stlon"/>
+        <alias index="2" name="" field="stlat"/>
+        <alias index="3" name="" field="distm"/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
-      <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="6619208">
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="st"/>
+        <default expression="" applyOnUpdate="0" field="stlon"/>
+        <default expression="" applyOnUpdate="0" field="stlat"/>
+        <default expression="" applyOnUpdate="0" field="distm"/>
+      </defaults>
+      <constraints>
+        <constraint exp_strength="0" constraints="0" field="st" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="stlon" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="stlat" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="distm" unique_strength="0" notnull_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="st" exp="" desc=""/>
+        <constraint field="stlon" exp="" desc=""/>
+        <constraint field="stlat" exp="" desc=""/>
+        <constraint field="distm" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions/>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
         <columns/>
       </attributetableconfig>
-      <editform></editform>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
       <editforminitfilepath></editforminitfilepath>
       <editforminitcode><![CDATA[]]></editforminitcode>
       <featformsuppress>0</featformsuppress>
       <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
       <widgets/>
-      <conditionalstyles>
-        <rowstyles/>
-        <fieldstyles/>
-      </conditionalstyles>
-      <defaults>
-        <default field="st" expression=""/>
-        <default field="stlon" expression=""/>
-        <default field="stlat" expression=""/>
-        <default field="distm" expression=""/>
-      </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>"st"</previewExpression>
+      <mapTip></mapTip>
     </maplayer>
-    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+    <maplayer autoRefreshEnabled="0" autoRefreshTime="0" geometry="Point" maxScale="0" simplifyLocal="1" simplifyAlgorithm="0" refreshOnNotifyEnabled="0" simplifyDrawingHints="1" readOnly="0" styleCategories="AllStyleCategories" simplifyMaxScale="1" simplifyDrawingTol="1" minScale="1e+8" type="vector" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" labelsEnabled="1">
+      <extent>
+        <xmin>7.81944399999999984</xmin>
+        <ymin>53.70638900000000149</ymin>
+        <xmax>7.81944399999999984</xmax>
+        <ymax>53.70638900000000149</ymax>
+      </extent>
       <id>mm_2012_test1_hisect20170607142308320</id>
       <datasource>file:./mm_2012_test1_hisect.dat?type=csv&amp;xField=stlon&amp;yField=stlat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no</datasource>
       <keywordList>
@@ -267,212 +394,415 @@
           <geographicflag>true</geographicflag>
         </spatialrefsys>
       </srs>
-      <provider encoding="System">delimitedtext</provider>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>false</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
       <vectorjoins/>
       <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
       <expressionfields/>
-      <map-layer-style-manager current="">
-        <map-layer-style name=""/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
       </map-layer-style-manager>
-      <edittypes>
-        <edittype widgetv2type="TextEdit" name="st">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="stlon">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="stlat">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="distm">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect1">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect2">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect3">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect4">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect5">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect6">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect7">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect8">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect9">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect10">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect11">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-        <edittype widgetv2type="TextEdit" name="hisect12">
-          <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
-        </edittype>
-      </edittypes>
-      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 symbollevels="0" enableorderby="0" forceraster="0" type="singleSymbol">
         <symbols>
-          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
-            <layer pass="0" class="SimpleMarker" locked="0">
-              <prop k="angle" v="0"/>
-              <prop k="color" v="69,181,189,255"/>
-              <prop k="horizontal_anchor_point" v="1"/>
-              <prop k="joinstyle" v="bevel"/>
-              <prop k="name" v="circle"/>
-              <prop k="offset" v="0,0"/>
-              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="offset_unit" v="MM"/>
-              <prop k="outline_color" v="0,0,0,255"/>
-              <prop k="outline_style" v="solid"/>
-              <prop k="outline_width" v="0"/>
-              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="outline_width_unit" v="MM"/>
-              <prop k="scale_method" v="diameter"/>
-              <prop k="size" v="2"/>
-              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
-              <prop k="size_unit" v="MM"/>
-              <prop k="vertical_anchor_point" v="1"/>
+          <symbol clip_to_extent="1" name="0" alpha="1" force_rhr="0" type="marker">
+            <layer pass="0" locked="0" enabled="1" class="SimpleMarker">
+              <prop v="0" k="angle"/>
+              <prop v="69,181,189,255" k="color"/>
+              <prop v="1" k="horizontal_anchor_point"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="circle" k="name"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0,0,0,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0" k="outline_width"/>
+              <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="diameter" k="scale_method"/>
+              <prop v="2" k="size"/>
+              <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+              <prop v="MM" k="size_unit"/>
+              <prop v="1" k="vertical_anchor_point"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option value="" name="name" type="QString"/>
+                  <Option name="properties"/>
+                  <Option value="collection" name="type" type="QString"/>
+                </Option>
+              </data_defined_properties>
             </layer>
           </symbol>
         </symbols>
         <rotation/>
-        <sizescale scalemethod="diameter"/>
+        <sizescale/>
       </renderer-v2>
-      <labeling type="simple"/>
       <customproperties/>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
-      <layerTransparency>0</layerTransparency>
-      <displayfield>st</displayfield>
-      <label>0</label>
-      <labelattributes>
-        <label fieldname="" text="Beschriftung"/>
-        <family fieldname="" name="Noto Sans"/>
-        <size fieldname="" units="pt" value="12"/>
-        <bold fieldname="" on="0"/>
-        <italic fieldname="" on="0"/>
-        <underline fieldname="" on="0"/>
-        <strikeout fieldname="" on="0"/>
-        <color fieldname="" red="0" blue="0" green="0"/>
-        <x fieldname=""/>
-        <y fieldname=""/>
-        <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
-        <angle fieldname="" value="0" auto="0"/>
-        <alignment fieldname="" value="center"/>
-        <buffercolor fieldname="" red="255" blue="255" green="255"/>
-        <buffersize fieldname="" units="pt" value="1"/>
-        <bufferenabled fieldname="" on=""/>
-        <multilineenabled fieldname="" on=""/>
-        <selectedonly on=""/>
-      </labelattributes>
-      <annotationform></annotationform>
+      <layerOpacity>1</layerOpacity>
+      <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="st">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="stlon">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="stlat">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="distm">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect1">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect2">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect3">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect4">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect5">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect6">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect7">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect8">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect9">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect10">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect11">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+        <field name="hisect12">
+          <editWidget type="TextEdit">
+            <config>
+              <Option type="Map">
+                <Option value="0" name="IsMultiline" type="QString"/>
+                <Option value="0" name="UseHtml" type="QString"/>
+              </Option>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
       <aliases>
-        <alias field="st" index="0" name=""/>
-        <alias field="stlon" index="1" name=""/>
-        <alias field="stlat" index="2" name=""/>
-        <alias field="distm" index="3" name=""/>
-        <alias field="hisect1" index="4" name=""/>
-        <alias field="hisect2" index="5" name=""/>
-        <alias field="hisect3" index="6" name=""/>
-        <alias field="hisect4" index="7" name=""/>
-        <alias field="hisect5" index="8" name=""/>
-        <alias field="hisect6" index="9" name=""/>
-        <alias field="hisect7" index="10" name=""/>
-        <alias field="hisect8" index="11" name=""/>
-        <alias field="hisect9" index="12" name=""/>
-        <alias field="hisect10" index="13" name=""/>
-        <alias field="hisect11" index="14" name=""/>
-        <alias field="hisect12" index="15" name=""/>
+        <alias index="0" name="" field="st"/>
+        <alias index="1" name="" field="stlon"/>
+        <alias index="2" name="" field="stlat"/>
+        <alias index="3" name="" field="distm"/>
+        <alias index="4" name="" field="hisect1"/>
+        <alias index="5" name="" field="hisect2"/>
+        <alias index="6" name="" field="hisect3"/>
+        <alias index="7" name="" field="hisect4"/>
+        <alias index="8" name="" field="hisect5"/>
+        <alias index="9" name="" field="hisect6"/>
+        <alias index="10" name="" field="hisect7"/>
+        <alias index="11" name="" field="hisect8"/>
+        <alias index="12" name="" field="hisect9"/>
+        <alias index="13" name="" field="hisect10"/>
+        <alias index="14" name="" field="hisect11"/>
+        <alias index="15" name="" field="hisect12"/>
       </aliases>
       <excludeAttributesWMS/>
       <excludeAttributesWFS/>
-      <attributeactions default="-1"/>
-      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="3145760">
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="st"/>
+        <default expression="" applyOnUpdate="0" field="stlon"/>
+        <default expression="" applyOnUpdate="0" field="stlat"/>
+        <default expression="" applyOnUpdate="0" field="distm"/>
+        <default expression="" applyOnUpdate="0" field="hisect1"/>
+        <default expression="" applyOnUpdate="0" field="hisect2"/>
+        <default expression="" applyOnUpdate="0" field="hisect3"/>
+        <default expression="" applyOnUpdate="0" field="hisect4"/>
+        <default expression="" applyOnUpdate="0" field="hisect5"/>
+        <default expression="" applyOnUpdate="0" field="hisect6"/>
+        <default expression="" applyOnUpdate="0" field="hisect7"/>
+        <default expression="" applyOnUpdate="0" field="hisect8"/>
+        <default expression="" applyOnUpdate="0" field="hisect9"/>
+        <default expression="" applyOnUpdate="0" field="hisect10"/>
+        <default expression="" applyOnUpdate="0" field="hisect11"/>
+        <default expression="" applyOnUpdate="0" field="hisect12"/>
+      </defaults>
+      <constraints>
+        <constraint exp_strength="0" constraints="0" field="st" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="stlon" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="stlat" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="distm" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect1" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect2" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect3" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect4" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect5" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect6" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect7" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect8" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect9" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect10" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect11" unique_strength="0" notnull_strength="0"/>
+        <constraint exp_strength="0" constraints="0" field="hisect12" unique_strength="0" notnull_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="st" exp="" desc=""/>
+        <constraint field="stlon" exp="" desc=""/>
+        <constraint field="stlat" exp="" desc=""/>
+        <constraint field="distm" exp="" desc=""/>
+        <constraint field="hisect1" exp="" desc=""/>
+        <constraint field="hisect2" exp="" desc=""/>
+        <constraint field="hisect3" exp="" desc=""/>
+        <constraint field="hisect4" exp="" desc=""/>
+        <constraint field="hisect5" exp="" desc=""/>
+        <constraint field="hisect6" exp="" desc=""/>
+        <constraint field="hisect7" exp="" desc=""/>
+        <constraint field="hisect8" exp="" desc=""/>
+        <constraint field="hisect9" exp="" desc=""/>
+        <constraint field="hisect10" exp="" desc=""/>
+        <constraint field="hisect11" exp="" desc=""/>
+        <constraint field="hisect12" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+      </attributeactions>
+      <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
         <columns/>
       </attributetableconfig>
-      <editform></editform>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
       <editforminitfilepath></editforminitfilepath>
       <editforminitcode><![CDATA[]]></editforminitcode>
       <featformsuppress>0</featformsuppress>
       <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
       <widgets/>
-      <conditionalstyles>
-        <rowstyles/>
-        <fieldstyles/>
-      </conditionalstyles>
-      <defaults>
-        <default field="st" expression=""/>
-        <default field="stlon" expression=""/>
-        <default field="stlat" expression=""/>
-        <default field="distm" expression=""/>
-        <default field="hisect1" expression=""/>
-        <default field="hisect2" expression=""/>
-        <default field="hisect3" expression=""/>
-        <default field="hisect4" expression=""/>
-        <default field="hisect5" expression=""/>
-        <default field="hisect6" expression=""/>
-        <default field="hisect7" expression=""/>
-        <default field="hisect8" expression=""/>
-        <default field="hisect9" expression=""/>
-        <default field="hisect10" expression=""/>
-        <default field="hisect11" expression=""/>
-        <default field="hisect12" expression=""/>
-      </defaults>
-      <previewExpression></previewExpression>
+      <previewExpression>"st"</previewExpression>
+      <mapTip></mapTip>
     </maplayer>
   </projectlayers>
+  <layerorder>
+    <layer id="corine2006_z0_utm32_subset20170607142234047"/>
+    <layer id="mm_2012_test120170607142245391"/>
+    <layer id="mm_2012_test1_hisect20170607142308320"/>
+  </layerorder>
   <properties>
+    <PositionPrecision>
+      <Automatic type="bool">true</Automatic>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+    </PositionPrecision>
+    <Legend>
+      <filterByMap type="bool">false</filterByMap>
+    </Legend>
+    <Gui>
+      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+    </Gui>
+    <Digitizing>
+      <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
+      <SnappingMode type="QString">current_layer</SnappingMode>
+      <DefaultSnapTolerance type="double">0</DefaultSnapTolerance>
+      <DefaultSnapType type="QString">off</DefaultSnapType>
+    </Digitizing>
     <Measurement>
       <DistanceUnits type="QString"></DistanceUnits>
       <AreaUnits type="QString"></AreaUnits>
     </Measurement>
     <SpatialRefSys>
-      <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
-      <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
-      <ProjectCRSID type="int">3452</ProjectCRSID>
+      <ProjectCrs type="QString">EPSG:32632</ProjectCrs>
+      <ProjectCRSProj4String type="QString">+proj=utm +zone=32 +datum=WGS84 +units=m +no_defs</ProjectCRSProj4String>
+      <ProjectCRSID type="int">3116</ProjectCRSID>
       <ProjectionsEnabled type="int">1</ProjectionsEnabled>
     </SpatialRefSys>
     <Paths>
       <Absolute type="bool">false</Absolute>
     </Paths>
-    <Gui>
-      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
-      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
-      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
-      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
-      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
-      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
-      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
-    </Gui>
-    <Digitizing>
-      <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
-      <SnappingMode type="QString">current_layer</SnappingMode>
-      <DefaultSnapType type="QString">off</DefaultSnapType>
-      <DefaultSnapTolerance type="double">0</DefaultSnapTolerance>
-    </Digitizing>
-    <PositionPrecision>
-      <DecimalPlaces type="int">2</DecimalPlaces>
-      <Automatic type="bool">true</Automatic>
-    </PositionPrecision>
-    <Legend>
-      <filterByMap type="bool">false</filterByMap>
-    </Legend>
+    <PAL>
+      <SearchMethod type="int">0</SearchMethod>
+      <ShowingCandidates type="bool">false</ShowingCandidates>
+      <CandidatesPolygon type="int">30</CandidatesPolygon>
+      <ShowingPartialsLabels type="bool">true</ShowingPartialsLabels>
+      <CandidatesPoint type="int">16</CandidatesPoint>
+      <CandidatesLine type="int">50</CandidatesLine>
+      <TextFormat type="int">0</TextFormat>
+      <DrawRectOnly type="bool">false</DrawRectOnly>
+      <ShowingAllLabels type="bool">false</ShowingAllLabels>
+    </PAL>
   </properties>
   <visibility-presets/>
+  <transformContext/>
+  <projectMetadata>
+    <identifier></identifier>
+    <parentidentifier></parentidentifier>
+    <language></language>
+    <type></type>
+    <title></title>
+    <abstract></abstract>
+    <links/>
+    <author></author>
+    <creation></creation>
+  </projectMetadata>
+  <Annotations/>
+  <Layouts/>
 </qgis>
