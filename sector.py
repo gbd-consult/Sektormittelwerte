@@ -42,9 +42,9 @@ def generateSectors(point, n, substeps, radius, authid):
     layer.startEditing()
     layer.addAttribute(QgsField("sectorID", QVariant.Int))
 
-    for i in range(n):
+    for i in range((n - 1), -1, -1):
         step_size = (((i + 1) * step) - (i * step)) / float(substeps)
-        angles = [ ((i * step) + (x * step_size) + offset) % 360 for x in range(substeps + 1)] 
+        angles = [ ((i * step) + (x * step_size) + offset) % 360 for x in range(substeps + 1)]
 
         poly = [point]
         for a in angles:
