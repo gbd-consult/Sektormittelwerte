@@ -284,7 +284,7 @@ class SectorMeanDialog(QDialog):
         if self.fileName != "":
             with open(self.fileName, 'w') as csvfile:
                 datawriter = csv.writer(csvfile)
-                round_ = lambda x: round(x,2) # round to 2 decimal digits
+                round_ = lambda x: round(x,4) # round to 4 decimal digits
                 # Check if we have the correct number of hisect values for weighted output
                 if not False in [len(a) == sectors for a in phisect]:
                     header = ['station', 'stlon', 'stlat',  'stx', 'sty',  'distm'] \
@@ -295,7 +295,7 @@ class SectorMeanDialog(QDialog):
                     # write table header
                     datawriter.writerow(header)
                     for int1, fp1, fp2, fp3, fp4, int2, fp5, lst1, lst2 in zip(pstation, pstlon, pstlat, pxutm32, pyutm32, pdistm, pisect0, pisectx, phisect):
-                        wisect = [round(x * y,2) for (x,y) in zip(lst1, lst2)]
+                        wisect = [round(x * y,4) for (x,y) in zip(lst1, lst2)]
                         cols = [int1, fp1, fp2, fp3, fp4, int2, round_(fp5)] \
                         + list(map(round_, lst1)) + list(map(round_, lst2)) + wisect + [sum(wisect)]
                         datawriter.writerow(cols)
